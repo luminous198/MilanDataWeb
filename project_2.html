@@ -1,0 +1,421 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Food Delivery Analysis</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+                            <header id="header">
+                                <a href="index.html" class="logo"><strong>Milan Garg</strong></a>
+                                <ul class="icons">
+                                    <li>  <a href="https://www.linkedin.com/in/milan-garg-540421294/" target="_blank" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+                                </ul>
+                            </header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Zomato Food Delivery Analysis</h1>
+									</header>
+
+									<span class="image main"><img src="images/zomato-analysis/main_banner.jpg" alt="" /></span>
+
+									<p>In today's fast-paced world, food delivery services have become an integral part of our lives, offering convenience, variety, and comfort at our fingertips. But have you ever stopped to analyze your own behavior, preferences, and spending habits when it comes to ordering food delivery? In this blog post, we'll dive into the fascinating world of personal insights gleaned from analyzing food delivery data.</p>
+                                    <p>Zomato India is a leading food delivery company, known for its user-friendly app and vast restaurant network. Founded in 2008, it has expanded across hundreds of Indian cities, offering convenience and variety to users. With features like user reviews and personalized recommendations, Zomato enhances the dining experience, making it easy for customers to discover and order their favorite dishes</p>
+                                    
+
+									<hr class="major" />
+
+									<h2>Lets Get Started</h2>
+                                    <p>The Data for the analysis has been scraped using zomato API which shows users Order history. The data was queried using python requests library. The tables below define the columns extracted for the analysis.</p>
+									
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <table border="1">
+                                                <caption>Orders</caption>
+                                                <thead>
+                                                <tr>
+                                                    <th>Column Name</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>order_date</td>
+                                                    <td>Date of the order</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>cost</td>
+                                                    <td>Total cost of the order</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>payment_status</td>
+                                                    <td>Status of payment for the order</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>delivery_address</td>
+                                                    <td>Address for delivery</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>dish_string</td>
+                                                    <td>String representation of dishes ordered</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>restaurant_name</td>
+                                                    <td>Name of the restaurant</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>hashid</td>
+                                                    <td>Unique identifier for the order</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>taxes</td>
+                                                    <td>Total taxes applied to the order</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>delivery_charge</td>
+                                                    <td>Charge for delivery</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>packing_charge</td>
+                                                    <td>Charge for packing</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>discounts</td>
+                                                    <td>Total discounts applied to the order</td>
+                                                </tr>
+                                                </tbody>
+                                                
+                                            </table>
+                                            </div>
+                                            <div class="col-6">
+                                                
+                                            <!-- Order Items Table -->
+                                            <table border="1">
+                                                <caption>Order Items</caption>
+                                                <thead>
+                                                <tr>
+                                                    <th>Column Name</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>hashid</td>
+                                                    <td>Unique identifier for the order to connect the orders table to items ordered.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>itemname</td>
+                                                    <td>Name of the item</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>unitcost</td>
+                                                    <td>Cost per unit of the item</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>totalcost</td>
+                                                    <td>Total cost of the order item</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>quantity</td>
+                                                    <td>Quantity of the item ordered</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                    </div>
+                                        <!-- Orders Table -->
+                                    
+									<hr class="major" />
+
+									<h2>Descriptive Stats</h2>
+                                    <div class="row">
+                                        <div class="col-3"></div>
+                                        <div class="col-6">
+                                            <table border="1">
+                                                <thead>
+                                                  <tr>
+                                                    <th>Statistic</th>
+                                                    <th>Cost</th>
+                                                    <th>Taxes</th>
+                                                    <th>Delivery Charge</th>
+                                                    <th>Packing Charge</th>
+                                                    <th>Discounts</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <td>Mean</td>
+                                                    <td>468.02</td>
+                                                    <td>24.67</td>
+                                                    <td>27.64</td>
+                                                    <td>10.89</td>
+                                                    <td>-48.56</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Median</td>
+                                                    <td>341.13</td>
+                                                    <td>15.89</td>
+                                                    <td>26.5</td>
+                                                    <td>0</td>
+                                                    <td>-47.3</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Mode</td>
+                                                    <td>305.4</td>
+                                                    <td>0</td>
+                                                    <td>0</td>
+                                                    <td>0</td>
+                                                    <td>0</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Standard Deviation</td>
+                                                    <td>349.51</td>
+                                                    <td>28.73</td>
+                                                    <td>24.17</td>
+                                                    <td>17.03</td>
+                                                    <td>64.39</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Range</td>
+                                                    <td>1988.89</td>
+                                                    <td>197.82</td>
+                                                    <td>109</td>
+                                                    <td>90</td>
+                                                    <td>700</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Minimum</td>
+                                                    <td>61.36</td>
+                                                    <td>0</td>
+                                                    <td>0</td>
+                                                    <td>0</td>
+                                                    <td>-700</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Maximum</td>
+                                                    <td>2050.25</td>
+                                                    <td>197.82</td>
+                                                    <td>109</td>
+                                                    <td>90</td>
+                                                    <td>0</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Count</td>
+                                                    <td>230</td>
+                                                    <td>230</td>
+                                                    <td>230</td>
+                                                    <td>230</td>
+                                                    <td>230</td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                              
+                                        </div>
+                                    </div>
+                                    <p>Reading from the table above, we see there are no blank values when we consider the various costs associated. There is high variability in cost as indicated by relatively high standard deviation of 349.5. Other components have low variability and have low standard deviations. The median packing charge is 0 indicating 50% of the orders do not incur packing charges. Taxes range from 0-197.82, it would be intresenting to see which items do not incur any taxes as most food items are taxed in India.</p>
+                                    <p>For Further analysis, we have removed rows containing payment status other than 1. This leaves us with a total of 208 records in the order table. We will make use of Power BI for further analysis and visualizations.</p>
+									<hr class="major" />
+
+									<h2>Does Order Frequency vary based on certain patterns?</h2>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span><img height="450" src="images/zomato-analysis/order_freq_hourly.jpg" alt="" /></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p>The above chart shows number of orders plotted against the time of the day specifically hour of the day when order was placed. Most orders are placed around afternoon between the hours of 2:00-3:00pm.</p>
+                                    <h3>Lunch is clearly the favorite time to order outside food. What about Day of the week?</h3>
+
+                                    <div class="row">
+                                        <div class="col-3"></div>
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/order_freq_weekday.jpg" alt="" /></span>
+                                            <figcaption>Orders according to different Day of Week.</figcaption>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <p>Saturday is the most preferred day of the week followed by Sunday. Togather, they make up almost half of the total orders.</p>
+                                    <h3>Do orders vary according to seasons?</h3>
+
+                                    <div class="row">
+                                        <div class="col-3"></div>
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/season_orders.jpg" alt="" /></span>
+                                            <figcaption>Orders according to different Seasons.</figcaption>
+                                        </div>
+                                        
+                                    </div>
+                                    <hr class="major" />
+                                    <h2>Are all orders delivered equal?</h2>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/delivery_charge_percentage.jpg" alt="" /></span>
+                                        </div>
+                                    </div>
+                                    <p>There does seem to be a large variation between delivery charges by different resturants. Some resturants charge as much as 30 percent of total cost while others charge less than 10percent. We look at some resturants with high and low delivery charges and also included packing charges for comparision below. The variability in delivery charge seems to be correlated with the total cost of the order. Delivery charges are more prevanlant in orders with lower total cost, the percentage delivery charge compared to cost becomes higher for these orders. We do not have data on distance travelled from delivery location to the delivered location which can be a useful metric here to check if these charges are due to resturants being far away. </p>
+                                    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/resturant_charges_comparision.jpg" alt="" /></span>
+                                        </div>
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/cost_vs_delivery_charge_correl.jpg" alt="" /></span>
+                                        </div>
+                                    
+                                    </div>
+
+                                    <hr class="major" />
+                                    <h2>How much pie does the government eat?</h2>
+                                    
+                                    <div class="row">
+                                        <div class="col-3"></div>
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/tax_vs_cost.jpg" alt="" /></span>
+                                        </div>
+                                    </div>
+
+                                    <p>There is a strong correlation between taxes and total cost. As total cost increases, the share of the government also increases. Intresting to note, there are also some values with 0 taxes.</p>
+                                    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/zero_tax_places.jpg" alt="" /></span>
+                                        </div>
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/cost_distribution.jpg" alt="" /></span>
+                                        </div>
+                                    </div>
+                                    <p>We attribute this to a discrepency in the ordering system since there is no common feature which can explain no taxes being levied on these transactions including order date, cost, year of order, resturant.</p>
+                                    
+                                    <hr class="major" />
+                                    <h2>Item Analysis.</h2>
+                                    
+                                    <p>When looking at most ordered items by cost, pizza and cake seem to be a frequent occurence. Indian curry Panner Butter Masala scores highest in cost and ranks number 3 in Frequency. We can extrapolate Samosa, Chole Bhature are priced low on unitcost basis as these items are the most frequence while they do not even come up in top 10 in terms of expenditure.</p>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/most_ordered.jpg" alt="" /></span>
+                                        </div>
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/most_ordered_cost.jpg" alt="" /></span>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <p>The top expenditure resturant is a sweets and bakery shop. Whats intresting is Pizza shops make up 6 out of 12 top expenditures.</p>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span><img height="350" src="images/zomato-analysis/most_ordered_cost_resturant.jpg" alt="" /></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Conclusion -->
+                                    <section>
+                                        <header class="major">
+                                            <h2>Conclusion</h2>
+                                        </header>
+                                        <p>In conclusion, the analysis of Zomato food delivery data has provided valuable insights into user behavior, spending patterns, and trends. Several key findings have emerged from the analysis:</p>
+                                        <ul>
+                                            <li>Order frequency exhibits distinct patterns, with peak times around lunch hours and certain days of the week, notably Saturdays and Sundays.</li>
+                                            <li>There is significant variability in delivery charges among different restaurants, with some charging higher percentages of the total order cost than others.</li>
+                                            <li>Taxes show a strong correlation with total order cost, indicating that as the total cost increases, the share of taxes also increases.</li>
+                                            <li>Certain orders have no taxes applied, suggesting a discrepancy in the ordering system or specific items that do not incur taxes.</li>
+                                            <li>Analysis of item ordering reveals popular items such as pizza and cake, with notable variations in cost and frequency among different food items and restaurants.</li>
+                                        </ul>
+                                        <p>Overall, the analysis sheds light on various aspects of food delivery behavior and provides insights that can inform decision-making and strategy development for Zomato and other food delivery services. Further exploration and refinement of the analysis could yield additional insights and opportunities for improvement.</p>
+                                    </section>
+
+                                    
+								</section>
+
+						</div>
+					</div>
+				<!-- Sidebar -->
+                <div id="sidebar">
+                    <div class="inner">
+
+                        <!-- Search -->
+                            <section id="search" class="alt">
+                                <form method="post" action="#">
+                                    <input type="text" name="query" id="query" placeholder="Search" />
+                                </form>
+                            </section>
+
+                        <!-- Menu -->
+                            <nav id="menu">
+                                <header class="major">
+                                    <h2>Menu</h2>
+                                </header>
+                                <ul>
+                                    <li><a href="index.html">Homepage</a></li>
+                                    <li><a href="resume.html">Resume</a></li>
+                                    <li>
+                                        <span class="opener">Projects</span>
+                                        <ul>
+                                            <li><a href="#">Project 1</a></li>
+                                            <li><a href="#">Project 2</a></li>
+                                            <li><a href="#">Project 3</a></li>
+                                            <li><a href="#">Project 4</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="opener">Blogs</span>
+                                        <ul>
+                                            <li><a href="blog_sql_question.html">Postgresql Generate Series</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        <!-- Section -->
+                            <section>
+                                <header class="major">
+                                    <h2>Get in touch</h2>
+                                </header>
+                                <p>Do get in touch if you are looking for a professional working in the field of data.</p>
+                                <ul class="contact">
+                                    <li class="icon solid fa-envelope"><a href="#">milangarg6991@gmail.com</a></li>
+                                    <li class="icon solid fa-phone">(+44) 7741-851570</li>
+                                    <li class="icon solid fa-home">St Marks Street<br />
+                                    Leeds, UK</li>
+                                </ul>
+                            </section>
+
+                        <!-- Footer -->
+                            <footer id="footer">
+                                <p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+                            </footer>
+
+                    </div>
+                </div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
