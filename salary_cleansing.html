@@ -1,0 +1,445 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Generic</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+                            
+                            <!-- Header -->
+                            <header id="header">
+                                <a href="index.html" class="logo"><strong>Milan Garg</strong></a>
+                                <ul class="icons">
+                                    <li>  <a href="https://www.linkedin.com/in/milan-garg-540421294/" target="_blank" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+                                </ul>
+                            </header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Salary Cleansing</h1>
+									</header>
+
+									<span class="image main"><img src="images/salary_cleansing/banner.jpg" alt="" /></span>
+
+                                    <p>Data cleaning plays a pivotal role in the realm of data analysis, serving as the foundation upon which accurate and meaningful insights are built. At its core, data cleaning is about refining raw data to remove inconsistencies, errors, and redundancies.</p>
+
+                                    <p>Despite its crucial role in ensuring the integrity and reliability of data analysis, data cleaning is often overlooked or underestimated. This oversight can have significant implications for the accuracy and validity of analytical results. There are several reasons why data cleaning is often overlooked.</p>
+
+                                    <ul>
+                                        <li><b>Time Constraints:</b> Due to pressure of producing results as fast as possible, data cleaning is often given less time than required.</li> 
+                                        <li><b>Complexity:</b> Data cleaning is a complex and iterative process and required deep understanding of both the business and data formats. Most of the time, key business process holders are not involved throughout the process.</li>
+                                        <li><b>Less Glamorous:</b> Developers often want to focus their attention on steps which generate tangible results like machine learning and visualizations therefore giving data cleaning less importance than deserved. It is seen as routine and mundane by many as it requires quite a lot of time and manual effort.</li>
+                                    </ul>
+
+                                    <hr class="major">
+                                    <h2>The Dataset</h2>
+
+                                    <p>We will be looking at a salary dataset gathered using a google form. The dataset is a real-world salary data from all over the world and has not been sanatised/cleaned, it is dumped in the raw format from the google sheet. Oscar Baruffa gives a very good overview why this might be a good dataset for a data cleaning exercise and I urge you to check out his website <a target="_blank" href="https://oscarbaruffa.com/messy/">here</a>. The website also includes a link for the google form, it would be worthwhile to check out the form to better understand the cleaning process.</p>
+                                    <p>Most quesions on the form are self explanatory, I add below questions from the form and their breif descriptions.</p>
+
+                                    <div class="row">
+                                        <table border="1">
+                                            <tr>
+                                                <th>Column</th>
+                                                <th>Description</th>
+                                                <th>Is Dropdown</th>
+                                                <th>Is Multi-Selection Allowed</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Timestamp</td>
+                                                <td>Records the time of data entry</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>How old are you?</td>
+                                                <td>Age of the respondent</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>What industry do you work in?</td>
+                                                <td>Industry of employment</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Job title</td>
+                                                <td>Title of the respondent's job</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>If your job title needs additional context, please clarify here:</td>
+                                                <td>Additional information about the job title</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>What is your annual salary? (You'll indicate the currency in a later question. If you are part-time or hourly, please enter an annualized equivalent -- what you would earn if you worked the job 40 hours a week, 52 weeks a year.)</td>
+                                                <td>Annual salary of the respondent</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>How much additional monetary compensation do you get, if any (for example, bonuses or overtime in an average year)? Please only include monetary compensation here, not the value of benefits.</td>
+                                                <td>Additional monetary compensation received by the respondent</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Please indicate the currency</td>
+                                                <td>Currency of the respondent's salary</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>If "Other," please indicate the currency here:</td>
+                                                <td>Additional information on currency if "Other" is selected</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>If your income needs additional context, please provide it here:</td>
+                                                <td>Additional context related to respondent's income</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>What country do you work in?</td>
+                                                <td>Country of employment</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                            </tr>
+                                            <tr>
+                                                <td>If you're in the U.S., what state do you work in?</td>
+                                                <td>State of employment (for U.S. respondents)</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                            </tr>
+                                            <tr>
+                                                <td>What city do you work in?</td>
+                                                <td>City of employment</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>How many years of professional work experience do you have overall?</td>
+                                                <td>Total years of professional work experience</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>How many years of professional work experience do you have in your field?</td>
+                                                <td>Years of professional work experience in the respondent's field</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>What is your highest level of education completed?</td>
+                                                <td>Highest level of education attained by the respondent</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>What is your gender?</td>
+                                                <td>Gender of the respondent</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>What is your race? (Choose all that apply.)</td>
+                                                <td>Race or ethnic background of the respondent</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                            </tr>
+                                            </table>                                              
+                                    </div>
+
+									<hr class="major" />
+									<h2>Form Design.</h2>
+
+                                    <p>Although the form is well prepared and makes good use of form features with strict validations, there are few points we need to note when looking at the data.</p>
+
+                                    <ul>
+                                        <li>How old are is you is given as radio button, could have been asked either as a Year of Birth or just a number indicating age giving more granluar data.</li>
+                                        <li>The country, state and city could be better represented as a heirarchy reducing data errors, it is understandable to not include cities as it would greatly increase the metadata attached to the form. But it is always better to reduce data errors at source. Alternatively, city code could be taken as they are pretty standardised and can greatly reduce data errors when finding the full geographical heirarchy for a location, although it might not be desirable in all cases.</li>
+                                        <li>Professional experience and experience in the field could be strucutred a a number instead of ranges.</li>
+                                    </ul>   
+
+                                    <p>The above points need not apply to all forms since all data collection is context dependent. There are multiple reasons people choose to use follow specific methods, for instance using a range instead of taking a number could be done to reduce cognitive load on the person filling the form. Asking date of birth instead of an age range can make lot of people drop out of filling the form when the formed is asked.</p>
+
+									<hr class="major" />
+                                    <h2>Cleanup Process</h2>
+
+                                    <p>We will use Python for the cleanup process along with several libraries including pandas, pycountry, nltk among others.</p>
+
+                                    <h3>Lets start with checking the data in the country column.</h3>
+
+                                    <div class="row">
+                                        <table border="1">
+                                            <tr>
+                                              <th></th>
+                                              <th>What country do you work in?</th>
+                                              <th>If you're in the U.S., what state do you work in?</th>
+                                              <th>What city do you work in?</th>
+                                            </tr>
+                                            <tr>
+                                              <td>count</td>
+                                              <td>28033</td>
+                                              <td>23022</td>
+                                              <td>27951</td>
+                                            </tr>
+                                            <tr>
+                                              <td>unique</td>
+                                              <td>374</td>
+                                              <td>133</td>
+                                              <td>4817</td>
+                                            </tr>
+                                            <tr>
+                                              <td>top</td>
+                                              <td>United States</td>
+                                              <td>California</td>
+                                              <td>Boston</td>
+                                            </tr>
+                                            <tr>
+                                              <td>freq</td>
+                                              <td>8986</td>
+                                              <td>2610</td>
+                                              <td>772</td>
+                                            </tr>
+                                          </table>                                          
+                                    </div>
+
+                                    <p>The country count already looks suspicious as there are a total of 195 countries in the world and the US has only 50 states while our data contains 374 countries and 133 cities respectively.</p>
+                                    
+                                    <p>Lets look at some discrepencies in the country column.</p>
+
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <span><img src="images/salary_cleansing/country_problem1.jpg" alt="" /></span>
+                                        </div>
+                                        <div class="col-4">
+                                            <span><img src="images/salary_cleansing/country_problem2.jpg" alt="" /></span>
+                                        </div>
+                                        <div class="col-4">
+                                            <span><img src="images/salary_cleansing/country_problem3.jpg" alt="" /></span>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <p>Issues identified in the country column:</p>
+                                    <ul>
+                                        <li>Different capitalisation: Eg usa vs USA</li>
+                                        <li>Using Abbreviations Eg: US/USA/UK</li>
+                                        <li>Using commonly used names for countries: Eg America instead of United States</li>
+                                        <li>Spelling mistakes: Eg United States vs United Stated/denmark vs danmark</li>
+                                        <li>Including a qualifier: Eg The Netherlands vs Netherlands</li>
+                                    </ul>
+
+                                    <p>Here is our strategy to cleanup the country column.</p>
+
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Step Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>User-defined mappings</td>
+                                                <td>The method starts by defining a dictionary user_defined_dict which maps common variations or abbreviations of country names to their standard names. For example, 'us', 'usa', 'america', 'united states', etc., are mapped to 'United States'. This allows for quick lookups of frequently encountered country name variations.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Check user-defined mappings</td>
+                                                <td>The method checks if the provided country name c exists in the user-defined dictionary. If it does, the corresponding standard name is returned directly from the dictionary.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Direct lookup</td>
+                                                <td>If the country name is not found in the user-defined dictionary, the method attempts to perform a direct lookup using the pycountry library. If a direct match is found, the country name is returned.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fuzzy search</td>
+                                                <td>If no direct match is found, the method attempts a fuzzy search using the pycountry library.If only one match is found, its name is returned. If multiple matches are found, 'Multiple Found'(which signifies an error code) is returned.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fallback to Levenshtein distance</td>
+                                                <td>In case of an exception during the fuzzy search(if it cannot find anything for a country), the method falls back to a predefined list of country names and uses Levenshtein distance to find a close match with a distance of 1. If a match is found, it is returned. You can read more about Levenshtein distance <a target="_blank" href="https://en.wikipedia.org/wiki/Levenshtein_distance">here</a>.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Handle errors</td>
+                                                <td>If an error occurs during the fuzzy search or if no suitable match is found using the fallback methods, 'Error Found' is returned.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p>We also make use of a cache when running the above process since fuzzy search can be quite slow when running on even a small dataset of 20K records. Caching the result of the operation makes searching many folds efficient. The results are detailed below.</p>
+
+                                    <div class="row">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>What country do you work in?</th>
+                                                    <th>country</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Count</td>
+                                                    <td>28033</td>
+                                                    <td>28033</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Unique</td>
+                                                    <td>374</td>
+                                                    <td>101</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Top</td>
+                                                    <td>United States</td>
+                                                    <td>United States</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Freq</td>
+                                                    <td>8986</td>
+                                                    <td>23053</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+
+                                    <p>We still have some countries left with ambigous values after cleanup as shown below. A total of 114 are left, we can make sure to cleanup most of the remaining data as well but it would require us to maintain direct mappings of these values.</p>
+                                    
+                                    <div class="row">
+                                        <span><img src="images/salary_cleansing/country_cleanup.jpg" alt="" /></span>
+                                    </div>
+
+
+
+									<h3>Next we will investigate salary column.</h3>
+                                    <p>Again, we start by looking at descriptive statistics. The maximum number is too large for a realistic salary compared to the lower quartiles, what can be going on.</p>
+
+                                    <div class="row">
+                                        <span><img src="images/salary_cleansing/salary_problem1.jpg" alt="" /></span>
+                                    </div>
+
+                                    <p>Looking at the dataset we quickly realise the data consists salaries from different nations in their local currencies which could lead to such discrepency.</p>
+
+                                    <div class="row">
+                                        <span><img width="80%" src="images/salary_cleansing/salary_problem2.jpg" alt="" /></span>
+                                    </div>
+
+                                    <p>A quick conversion from the Indonesian Rupiah to UK Dollar shows that 870,000,000 IDR is equivalent to 54,888 US Dollar(as of the time of writing this blog) which does not seem implausible.</p>
+                                    <p>Next, we check the descriptive statistics for Salary for US citizens only using the country filter.</p>
+                                    <div class="row">
+                                        <span><img src="images/salary_cleansing/salary_desc_us_only.jpg" alt="" /></span>
+                                    </div>
+
+                                    <p>Although, $1million does not seem improbable, upon close inspection we find the record is most likely junk. Unfortunately, there is no easy way to find such records hence making data cleaning a repetitive and non-glamorous aspect of data analysis.</p>
+                                    
+                                    <div class="row">
+                                        <span><img width="80%" src="images/salary_cleansing/salary_us_junk.jpg" alt="" /></span>
+                                    </div>
+                                    <br>
+                                    <p>Removing the above record, we get the next highest salary in US of $5000044. To make further sense of the salary, we need to first standardise the currency we are dealing in. We have two columns for the same, one is a dropdown and other is a text values entered by the user in case currency is not listed.</p>
+
+                                    <p>We are going to continue our analysis into other variables into the next part and hope to uncover some new challanges and insights into the dataset.</p>
+
+									<hr class="major" />
+                                    <h2>Conclusion</h2>
+<p>Data cleaning is essential for ensuring accurate and reliable insights from datasets. In this blog, we navigated through the complexities of cleaning a real-world salary dataset, addressing challenges like inconsistent country names and outlier salaries. By employing manual mappings, fuzzy string matching, and error handling techniques, we successfully standardized and cleansed the data.</p>
+<p>As we conclude, it's crucial to recognize data cleaning as an ongoing process. Continuous refinement and improvement are necessary to maintain data accuracy and readiness for analysis. Thank you for joining us on this journey, and we hope you found this exploration of data cleaning insightful.</p>
+
+								</section>
+
+						</div>
+					</div>
+
+                    				<!-- Sidebar -->
+                <div id="sidebar">
+                    <div class="inner">
+
+                        <!-- Search -->
+                            <section id="search" class="alt">
+                                <form method="post" action="#">
+                                    <input type="text" name="query" id="query" placeholder="Search" />
+                                </form>
+                            </section>
+
+                        <!-- Menu -->
+                            <nav id="menu">
+                                <header class="major">
+                                    <h2>Menu</h2>
+                                </header>
+                                <ul>
+                                    <li><a href="index.html">Homepage</a></li>
+                                    <li><a href="resume.html">Resume</a></li>
+                                    <li>
+                                        <span class="opener">Projects</span>
+                                        <ul>
+                                            <li><a href="salary_cleansing.html">Salary Data Cleansing</a></li>
+                                            <li><a href="project_2.html">Food Delivery Analysis</a></li>
+                                            <li><a href="#">UK Grocery Pricing Analysis (Coming Soon)</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="opener">Blogs</span>
+                                        <ul>
+                                            <li><a href="blog_sql_question.html">Postgresql Generate Series</a></li>
+                                            <li><a href="coming-soon.html">Simple Scraping and Transformation</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        <!-- Section -->
+                            <section>
+                                <header class="major">
+                                    <h2>Get in touch</h2>
+                                </header>
+                                <p>Do get in touch if you are looking for a professional working in the field of data.</p>
+                                <ul class="contact">
+                                    <li class="icon solid fa-envelope"><a href="#">milangarg6991@gmail.com</a></li>
+                                    <li class="icon solid fa-phone">(+44) 7741-851570</li>
+                                    <li class="icon solid fa-home">St Marks Street<br />
+                                    Leeds, UK</li>
+                                </ul>
+                            </section>
+
+                        <!-- Footer -->
+                            <footer id="footer">
+                                <p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+                            </footer>
+
+                    </div>
+                </div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
