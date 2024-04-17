@@ -50,7 +50,7 @@
                                     <h2>The Dataset</h2>
 
                                     <p>We will be looking at a salary dataset gathered using a google form. The dataset is a real-world salary data from all over the world and has not been sanatised/cleaned, it is dumped in the raw format from the google sheet. Oscar Baruffa gives a very good overview why this might be a good dataset for a data cleaning exercise and I urge you to check out his website <a target="_blank" href="https://oscarbaruffa.com/messy/">here</a>. The website also includes a link for the google form, it would be worthwhile to check out the form to better understand the cleaning process.</p>
-                                    <p>Most quesions on the form are self explanatory, I add below questions from the form and their breif descriptions.</p>
+                                    <p>Most questions on the form are self explanatory, I add below questions from the form and their brief descriptions.</p>
 
                                     <div class="row">
                                         <table border="1">
@@ -177,9 +177,9 @@
                                     <p>Although the form is well prepared and makes good use of form features with strict validations, there are few points we need to note when looking at the data.</p>
 
                                     <ul>
-                                        <li>How old are is you is given as radio button, could have been asked either as a Year of Birth or just a number indicating age giving more granluar data.</li>
-                                        <li>The country, state and city could be better represented as a heirarchy reducing data errors, it is understandable to not include cities as it would greatly increase the metadata attached to the form. But it is always better to reduce data errors at source. Alternatively, city code could be taken as they are pretty standardised and can greatly reduce data errors when finding the full geographical heirarchy for a location, although it might not be desirable in all cases.</li>
-                                        <li>Professional experience and experience in the field could be strucutred a a number instead of ranges.</li>
+                                        <li>How old are is you is given as radio button, could have been asked either as a Year of Birth or just a number indicating age giving more granular data.</li>
+                                        <li>The country, state and city could be better represented as a hierarchy reducing data errors, it is understandable to not include cities as it would greatly increase the metadata attached to the form. But it is always better to reduce data errors at source. Alternatively, city code could be taken as they are pretty standardised and can greatly reduce data errors when finding the full geographical heirarchy for a location, although it might not be desirable in all cases.</li>
+                                        <li>Professional experience and experience in the field could be structured a a number instead of ranges.</li>
                                     </ul>   
 
                                     <p>The above points need not apply to all forms since all data collection is context dependent. There are multiple reasons people choose to use follow specific methods, for instance using a range instead of taking a number could be done to reduce cognitive load on the person filling the form. Asking date of birth instead of an age range can make lot of people drop out of filling the form when the formed is asked.</p>
@@ -325,7 +325,7 @@
                                         
                                     </div>
 
-                                    <p>We still have some countries left with ambigous values after cleanup as shown below. A total of 114 are left, we can make sure to cleanup most of the remaining data as well but it would require us to maintain direct mappings of these values.</p>
+                                    <p>We still have some countries left with ambiguous values after cleanup as shown below. A total of 114 are left, we can make sure to cleanup most of the remaining data as well but it would require us to maintain direct mappings of these values.</p>
                                     
                                     <div class="row">
                                         <span><img src="images/salary_cleansing/country_cleanup.jpg" alt="" /></span>
@@ -360,7 +360,7 @@
                                     <br>
                                     <p>Removing the above record, we get the next highest salary in US of $5000044. To make further sense of the salary, we need to first standardise the currency we are dealing in. We have two columns for the same, one is a dropdown and other is a text values entered by the user in case currency is not listed.</p>
 
-                                    <p>We are going to continue our analysis into other variables into the next part and hope to uncover some new challanges and insights into the dataset.</p>
+                                    <p>We are going to continue our analysis into other variables into the next part and hope to uncover some new challenges and insights into the dataset.</p>
 
 									<hr class="major" />
                                     <h2>Conclusion</h2>
