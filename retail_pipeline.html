@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Milan Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+                            <header id="header">
+                                <a href="index.html" class="logo"><strong>Milan Garg</strong></a>
+                                <ul class="icons">
+                                    <li>  <a href="https://www.linkedin.com/in/milan-garg-540421294/" target="_blank" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+                                </ul>
+                            </header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Building a Scalable Retail Data Extraction Pipeline</h1>
+									</header>
+
+									<span class="image main"><img src="images/retail-pipeline/uk_supermarkets.jpg" alt="" /></span>
+                                    <p>In the ever-evolving retail industry, having access to real-time data is crucial for making informed decisions. This project aims to build a scalable data extraction pipeline that scrapes retail data from multiple stores, processes and cleans it, and ultimately stores it for analysis. By tracking changing grocery prices over time, this project helps in monitoring inflation trends, understanding market dynamics, and making data-driven decisions. Accurate and up-to-date retail data can provide valuable insights for both consumers and businesses, helping to identify pricing trends, competitive positioning, and economic shifts.</p>
+									<p>To achieve this, we leverage a combination of powerful technologies. Selenium is used for web scraping, Python and Pandas for data processing and cleaning, and Apache Airflow for pipeline orchestration. Containerization with Docker ensures portability, while deployment on AWS services such as Amazon S3, ECR, and EC2 guarantees scalability and reliability. This blog post will walk you through each step of the project, from data scraping to deployment, and address challenges such as IP blocking by retailers.</p>
+                                    
+
+									<hr class="major" />
+
+									<h2>Prerequisites</h2>
+                                    <ul>
+                                        <li><strong>Basic Knowledge of Python:</strong> Understanding of Python programming, including libraries such as Pandas and Selenium.</li>
+                                        <li><strong>Familiarity with Web Scraping:</strong> Basic knowledge of web scraping techniques and tools.</li>
+                                        <li><strong>Understanding of Docker:</strong> Basic knowledge of Docker for containerization.</li>
+                                        <li><strong>Experience with Cloud Services:</strong>
+                                            <ul>
+                                                <li>Amazon S3 for storage.</li>
+                                                <li>Amazon ECR for Docker image registry.</li>
+                                                <li>DigitalOcean for deployment.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Apache Airflow Knowledge:</strong> Understanding of Apache Airflow for orchestrating data pipelines.</li>
+                                        <li><strong>Development Environment:</strong>
+                                            <ul>
+                                                <li>Python installed on your machine.</li>
+                                                <li>Docker installed and running.</li>
+                                                <li>AWS CLI configured with your AWS account.</li>
+                                                <li>An IDE or text editor for coding (e.g., VS Code, PyCharm).</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Accounts and Subscriptions:</strong>
+                                            <ul>
+                                                <li>AWS account with appropriate permissions for S3 and ECR.</li>
+                                                <li>DigitalOcean account for deployment.</li>
+                                                <li>Any necessary proxy or VPN services for overcoming IP blocking issues.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <h2>Project Structure</h2>
+                                    <p>The full codebase for the process can be checked from Github, a template config file is also provided in which security credntials need to be updated to run the code. The program runs using docker and should work by using docker-compose commands.</p>
+                                    <p>The github link for the project is <a title="a" href="https://github.com/luminous198/RetailDataEngineeringUK" target="_blank"><span class="label">here.</span></a></p>
+
+                                    <p>A well-structured project is crucial for several reasons:</p>
+                                    <ul>
+                                        <li><strong>Readability and Maintainability:</strong> A clear and logical structure makes it easier for developers to understand and navigate the codebase. This is especially important for onboarding new team members and for long-term maintenance.</li>
+                                        <li><strong>Scalability:</strong> As the project grows, a well-organized structure allows for easy addition of new features and modules without causing clutter or confusion.</li>
+                                        <li><strong>Collaboration:</strong> A consistent structure helps multiple developers work together efficiently, as they can easily find and understand different parts of the project.</li>
+                                        <li><strong>Debugging and Testing:</strong> A modular structure allows for easier testing and debugging. It’s simpler to isolate and fix issues when the code is organized logically.</li>
+                                    </ul>
+
+                                    <p>Next, we look at how the project directory is setup according to best practices.</p>
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <ul>
+                                                <li><strong>commons/:</strong>Contains config related files.</li>
+                                                <li><strong>dags/:</strong> Houses the Directed Acyclic Graphs (DAGs) for Apache Airflow, defining pipelines, including tasks and their dependencies.</li>
+                                                <li><strong>data-loading/:</strong> Responsible for scripts and modules related to loading data into the database, we currently do not load to any database, instead just save the files to Amazon S3.</li>
+                                                <li><strong>data_collector/:</strong> Dedicated to the data scraping logic, where data is collected from different retail websites.</li>
+                                                <li><strong>data_utils/:</strong> Contains utility functions and helper scripts for processing and manipulating data.</li>
+                                                <li><strong>docs/:</strong> Meant for documentation, including guides, API documentation, and other resources to help developers understand and use the project.</li>
+                                                <li><strong>retail-metadata/:</strong> Stores metadata information about the retailers, such as mappings, brand data and other reference data.</li>
+                                                <li><strong>s3_utils/:</strong> Contains scripts and modules for interacting with Amazon S3, such as uploading and downloading files.</li>
+                                                <li><strong>static_vars/:</strong> Holds static variables and configuration settings that are used throughout the project. For instance, names of stores used.</li>
+                                                <li><strong>temp/:</strong> Used for temporary files and data during the execution of the project, excluded from version control.</li>
+                                                <li><strong>transforms/:</strong> Contains scripts and modules for transforming and cleaning data as part of the ETL (Extract, Transform, Load) process.</li>
+                                                <li><strong>.gitignore:</strong> Specifies which files and directories should be ignored by Git, helping to keep the repository clean from unnecessary files.</li>
+                                                <li><strong>airflow.env:</strong> Contains configuration settings for running Apache Airflow.</li>
+                                                <li><strong>docker-compose.yml:</strong> Defines services, networks, and volumes for Docker Compose, enabling multi-container Docker applications.</li>
+                                                <li><strong>Dockerfile:</strong> Contains instructions for building a Docker image for the project.</li>
+                                                <li><strong>Dockerfile.chrome, Dockerfile.firefox:</strong> Specific Dockerfiles for creating images with Chrome and Firefox browsers, for Selenium web scraping.</li>
+                                                <li><strong>Dockerfile.postgres, Dockerfile.redis:</strong> Dockerfiles for creating images for PostgreSQL and Redis, used by airflow.</li>
+                                                <li><strong>README.md:</strong> Provides an overview of the project, including instructions on how to set up and use it.</li>
+                                                <li><strong>requirements.txt:</strong> Lists the Python dependencies needed for the project.</li>
+                                                <li><strong>server-docker-compose.yml:</strong> An additional Docker Compose file, for setting up server-side services.</li>
+                                                <li><strong>__init__.py:</strong> Indicates that the directory should be treated as a Python package.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-4">
+                                            <span><img src="images/retail-pipeline/project_strucure.jpg" alt="" /></span>
+                                        </div>
+                                    </div>
+
+                                    
+                                
+
+                                    
+
+									<hr class="major" />
+									<h2>Data Scraping with Selenium</h2>
+
+                                    <hr class="major" />
+									<h2>Overcoming IP Blocking Challenges</h2>
+
+                                    <hr class="major" />
+									<h2>Saving Data to Files</h2>
+
+                                    <hr class="major" />
+									<h2>Data Integration with Pandas</h2>
+
+                                    <hr class="major" />
+									<h2>Data Cleanup</h2>
+
+                                    <hr class="major" />
+									<h2>Saving Data to Amazon S3</h2>
+
+                                    <hr class="major" />
+									<h2>Pipeline Orchestration with Apache Airflow</h2>
+
+                                    <hr class="major" />
+									<h2>Containerization with Docker</h2>
+
+                                    <hr class="major" />
+									<h2>Docker Registry with Amazon ECR</h2>
+
+                                    <hr class="major" />
+									<h2>Deployment on Digital Ocean</h2>
+
+                                    <hr class="major" />
+									<h2>Conclusion</h2>
+                                    
+                                    
+								</section>
+
+						</div>
+					</div>
+				<!-- Sidebar -->
+                <div id="sidebar">
+                    <div class="inner">
+
+                        <!-- Search -->
+                            <section id="search" class="alt">
+                                <form method="post" action="#">
+                                    <input type="text" name="query" id="query" placeholder="Search" />
+                                </form>
+                            </section>
+
+                        <!-- Menu -->
+                            <nav id="menu">
+                                <header class="major">
+                                    <h2>Menu</h2>
+                                </header>
+                                <ul>
+                                    <li><a href="index.html">Homepage</a></li>
+                                    <li><a href="resume.html">Resume</a></li>
+                                    <li>
+                                        <span class="opener">Projects</span>
+                                        <ul>
+                                            <li><a href="salary_cleansing.html">Salary Data Cleansing</a></li>
+                                            <li><a href="project_2.html">Food Delivery Analysis</a></li>
+                                            <li><a href="retail_pipeline.html">UK Retail Data Pipeline</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="opener">Blogs</span>
+                                        <ul>
+                                            <li><a href="blog_sql_question.html">Postgresql Generate Series</a></li>
+                                            <li><a href="blog_scraping_simple_food_orders.html">Simple Scraping and Transformation</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        <!-- Section -->
+                            <section>
+                                <header class="major">
+                                    <h2>Get in touch</h2>
+                                </header>
+                                <p>Do get in touch if you are looking for a professional working in the field of data.</p>
+                                <ul class="contact">
+                                    <li class="icon solid fa-envelope"><a href="#">milangarg6991@gmail.com</a></li>
+                                    <li class="icon solid fa-phone">(+44) 7741-851570</li>
+                                    <li class="icon solid fa-home">St Marks Street<br />
+                                    Leeds, UK</li>
+                                </ul>
+                            </section>
+
+                        <!-- Footer -->
+                        <footer id="footer">
+                            <p class="copyright">Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+                        </footer>
+
+                    </div>
+                </div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
