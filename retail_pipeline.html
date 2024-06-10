@@ -72,7 +72,7 @@
                                     </ul>
 
                                     <h2>Project Structure</h2>
-                                    <p>The full codebase for the process can be checked from Github, a template config file is also provided in which security credntials need to be updated to run the code. The program runs using docker and should work by using docker-compose commands.</p>
+                                    <p>The full codebase for the process can be checked from Github, a template config file is also provided in which security credentials need to be updated to run the code. The program runs using docker and should work by using docker-compose commands.</p>
                                     <p>The github link for the project is <a title="a" href="https://github.com/luminous198/RetailDataEngineeringUK" target="_blank"><span class="label">here.</span></a></p>
 
                                     <p>A well-structured project is crucial for several reasons:</p>
@@ -116,44 +116,441 @@
                                         </div>
                                     </div>
 
-                                    
-                                
-
-                                    
-
 									<hr class="major" />
 									<h2>Data Scraping with Selenium</h2>
+
+                                    <p>Data scraping is the major component of our pipeline, focusing on extracting retail data from selected stores: Morrisons, Aldi, and Asda.</p>
+
+                                    <h3>Store Selection and Website Layouts</h3>
+                                    <p>We chose Morrisons, Aldi, and Asda for their comprehensive product offerings and varying website layouts, which present unique challenges and opportunities for data scraping.</p>
+                                
+                                    <ul>
+                                        <li><strong>Morrisons:</strong>
+                                            <ul>
+                                                <li>Products are loaded dynamically as you scroll.</li>
+                                                <li>We select a category, scroll to the bottom of the page using Selenium, and scrape all product boxes.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Aldi and Asda:</strong>
+                                            <ul>
+                                                <li>These stores follow a similar layout with a paginated approach per category.</li>
+                                                <li>Each category has multiple pages, and we iterate through each page, downloading the content within the product boxes.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                
+                                    <h3>Scraping Process</h3>
+                                    <ol>
+                                        <li><strong>Define Categories:</strong>
+                                            <p>We begin by defining a list of categories to scrape for each store.</p>
+                                        </li>
+                                        <li><strong>Scraping Aldi and Asda:</strong>
+                                            <p>For each category, we navigate through multiple pages. On each page, we extract the content within the product boxes.</p>
+                                        </li>
+                                        <li><strong>Scraping Morrisons:</strong>
+                                            <p>We select a category and use Selenium to scroll to the bottom of the page. Once all products are loaded, we scrape the content within the product boxes.</p>
+                                        </li>
+                                    </ol>
+                                
+                                    <h3>Data Handling</h3>
+                                    <p>After collecting the data from both scrapers, we consolidate the information into a Pandas DataFrame. This data is then written to separate CSV files for further processing and analysis.</p>
+                                
+                                    <h3>Code Structure</h3>
+                                    <p>All scraper codes are designed to be independent of each other, following Object-Oriented Programming (OOP) principles. This approach allows us to reuse common functions, such as setting up the browser for Selenium, ensuring modularity and ease of maintenance.</p>
+                                
+
 
                                     <hr class="major" />
 									<h2>Overcoming IP Blocking Challenges</h2>
 
                                     <hr class="major" />
 									<h2>Saving Data to Files</h2>
+                                    
+                                    <p>Defining a file structure is crucial when implementing a scraper. Care must be taken to not fill up too much memory when scraping data, a natural checkpoint must be identified to save data on incremental basis. We choose this checkpoint as a product category for each store. Additionally, it is better to make the scraper recovery proof meaning, the entire dataset does not get lost in case the scraper crashes. We follow the below best practices in order to overcome these challenges.</p>
+
+                                    <ul>
+                                        <li>Each category's data is saved to a different file to avoid taking up too much RAM and to ensure data is not lost if the scraper crashes.</li>
+                                        <li>When starting the scraper, the output folder is checked for category data that has already been scraped. If data for a category is found, that category is skipped. This mechanism is in place to save duplicate work and ensure efficiency if the scraper crashes and needs to be restarted.</li>
+                                        <li>The output format for each category can vary, but a CSV file is always written.</li>
+                                        <li>The category names can differ for each store, accommodating the unique categorizations used by Morrisons, Aldi, and Asda.</li>
+                                    </ul>
+
+                                    <p>The output structure of the scraping directory is shown in the below image.</p>
+                                    <span><img src="images/retail-pipeline/scraping_dir.jpg" alt="" /></span>
 
                                     <hr class="major" />
 									<h2>Data Integration with Pandas</h2>
+                                    <p>This transformation is designed to take the retail data we have scraped from three different stores—Morrisons, Aldi, and Asda—and merge it into one comprehensive file. This combined data file makes it easier to analyze and compare prices and other product details across different stores.</p>
+
+                                    <h3>Purpose</h3>
+                                    <p>The main purpose of this script is to:</p>
+                                    <ul>
+                                        <li>Consolidate data from multiple sources into a single, uniform format.</li>
+                                        <li>Facilitate easier data analysis by having all the information in one place.</li>
+                                        <li>Ensure that the data from different stores can be compared directly.</li>
+                                    </ul>
+                                
+                                    <h3>Challenges in Integration</h3>
+                                    <ul>
+                                        <li><strong>Different Data Formats:</strong>
+                                            <p>Each store may present its data differently. For example, Morrisons might use different column names or units of measurement compared to Aldi and Asda.</p>
+                                            <p><strong>Solution:</strong> The script renames and standardizes columns so that the data from all three stores has the same structure.</p>
+                                        </li>
+                                        <li><strong>Data Integrity and Consistency:</strong>
+                                            <p>Ensuring that the data remains accurate and consistent when combining it from different sources.</p>
+                                            <p><strong>Solution:</strong> The script adds common columns like <code>scrape_date</code> and <code>Storename</code> to keep track of where and when the data was collected. It also handles missing values and differences in column names.</p>
+                                        </li>
+                                        <li><strong>Handling Missing Data:</strong>
+                                            <p>Some stores might not have certain data fields, such as ratings or promotions.</p>
+                                            <p><strong>Solution:</strong> The script fills in missing data with empty values where necessary, ensuring that the final dataset remains consistent.</p>
+                                        </li>
+                                        <li><strong>Efficiency and Performance:</strong>
+                                            <p>Combining large datasets can be resource-intensive.</p>
+                                            <p><strong>Solution:</strong> The script processes each store's data separately and then merges them, which helps manage memory usage and keeps the process efficient.</p>
+                                        </li>
+                                    </ul>
+                                
+                                    <h3>How the Script Works</h3>
+                                    <ol>
+                                        <li><strong>Reading Data:</strong>
+                                            <p>The script reads the data files from each store's directory for a given date. It adds additional columns like <code>scrape_date</code> and <code>Storename</code> to each dataset.</p>
+                                        </li>
+                                        <li><strong>Standardizing Data:</strong>
+                                            <p>The script standardizes the column names across all datasets. For example, it ensures that the price per unit of measure is consistently named.</p>
+                                        </li>
+                                        <li><strong>Combining Data:</strong>
+                                            <p>The script merges the standardized data from all three stores into one DataFrame. It then saves this combined data into a CSV file, which can be easily used for further analysis.</p>
+                                        </li>
+                                    </ol>
 
                                     <hr class="major" />
 									<h2>Data Cleanup</h2>
 
+                                    <p>This transformation is designed to clean and standardize the combined data file created from the retail data of Morrisons, Aldi, and Asda. The goal is to ensure that the data is accurate, consistent, and ready for analysis. The cleanup process involves various steps to normalize pricing, standardize units of measurement, identify product brands, and create unique identifiers for each product.</p>
+
+                                    <h3>Purpose</h3>
+                                    <p>The main purpose of this script is to:</p>
+                                    <ul>
+                                        <li>Clean and standardize the combined data from multiple sources.</li>
+                                        <li>Ensure consistency in the data for easier analysis.</li>
+                                        <li>Add additional useful information, such as product brands and unique identifiers.</li>
+                                    </ul>
+                                
+                                    <h3>Cleanups Applied</h3>
+                                    <ul>
+                                        <li><strong>Inconsistent Price Formats:</strong>
+                                            <p>Prices may be represented differently across the datasets.</p>
+                                            <p><strong>Solution:</strong> The <code>cleanup_price</code> function standardizes price formats by removing currency symbols and converting values to a uniform float format.</p>
+                                        </li>
+                                        <li><strong>Different Volume Units:</strong>
+                                            <p>Volumes may be listed in various units (e.g., kg, g, ml).</p>
+                                            <p><strong>Solution:</strong> The <code>standardize_volume_tuple</code> function converts different volume strings to standardized units (e.g., kg, l) and returns them as a tuple.</p>
+                                        </li>
+                                        <li><strong>Cleaning Product Names:</strong>
+                                            <p>Product names may contain volume information or other inconsistencies.</p>
+                                            <p><strong>Solution:</strong> The <code>clean_product_name</code> function removes volume information from product names to standardize them.</p>
+                                        </li>
+                                        <li><strong>Brand Identification:</strong>
+                                            <p>Identifying the brand of a product can be challenging due to variations in product names.</p>
+                                            <p><strong>Solution:</strong> The <code>add_brand</code> function checks product names against a list of known brands and marks products accordingly.</p>
+                                        </li>
+                                        <li><strong>Creating Unique Identifiers:</strong>
+                                            <p>Each product needs a unique identifier for tracking and analysis.</p>
+                                            <p><strong>Solution:</strong> The <code>create_fingerprint</code> function generates a unique fingerprint for each product based on its name, store, and volume.</p>
+                                        </li>
+                                    </ul>
+                                
+                                    <h3>How the Script Works</h3>
+                                    <ol>
+                                        <li><strong>Reading and Cleaning Data:</strong>
+                                            <p>The script reads the combined data file created from Morrisons, Aldi, and Asda. It cleans the data by standardizing prices and volumes, and by cleaning product names.</p>
+                                        </li>
+                                        <li><strong>Identifying Brands:</strong>
+                                            <p>The script uses a pre-defined list of brands to identify and mark brands in the product names.</p>
+                                        </li>
+                                        <li><strong>Creating Unique Identifiers:</strong>
+                                            <p>It generates unique fingerprints for each product to ensure that each entry can be uniquely identified.</p>
+                                        </li>
+                                        <li><strong>Saving Cleaned Data:</strong>
+                                            <p>The cleaned and standardized data is saved to a new CSV file, making it ready for analysis.</p>
+                                        </li>
+                                    </ol>
+
                                     <hr class="major" />
 									<h2>Saving Data to Amazon S3</h2>
+
+                                    <p>The last step in the pipeline is to upload the cleaned file to Amazon S3, a cloud storage service. The main functions of the script include connecting to S3, creating a bucket if it doesn't already exist, and uploading files to the specified bucket.</p>
+
+                                    <h3>Key Functions</h3>
+                                    <ul>
+                                        <li><strong>Connecting to S3:</strong>
+                                            <p>The <code>connect_to_s3</code> function sets up a connection to Amazon S3 using the provided access credentials. This connection allows the script to interact with S3, such as uploading or checking for files.</p>
+                                        </li>
+                                        <li><strong>Creating a Bucket:</strong>
+                                            <p>The <code>create_bucket_if_not_exist</code> function checks if a specified bucket (a storage container in S3) exists. If the bucket does not exist, it creates one. If it already exists, it simply confirms its existence.</p>
+                                        </li>
+                                        <li><strong>Uploading Files:</strong>
+                                            <p>The <code>upload_to_s3</code> function uploads a file to the specified bucket in S3. It places the file in a 'raw' folder within the bucket and provides feedback on whether the upload was successful or if the file was not found.</p>
+                                        </li>
+                                        <li><strong>Uploading Cleaned Files:</strong>
+                                            <p>The <code>upload_clean_file_to_s3</code> function is designed to be used in a workflow (e.g., with Apache Airflow). It retrieves the path of a cleaned data file, connects to S3, ensures the bucket exists, and uploads the file to S3.</p>
+                                        </li>
+                                    </ul>
 
                                     <hr class="major" />
 									<h2>Pipeline Orchestration with Apache Airflow</h2>
 
+                                    <p>The Airflow pipeline is designed to automate the process of extracting, transforming, and loading (ETL) retail data from multiple stores (Morrisons, Aldi, and Asda) into Amazon S3. The pipeline runs daily and follows these main steps:</p>
+
+                                    <h3>Common Settings</h3>
+                                    <p>Each extraction task (<code>aldi_extract</code>, <code>asda_extract</code>, <code>morrissons_extract</code>) will retry up to 5 times with a 30-second delay between attempts in case of failure.</p>
+                                
+                                    <h3>Steps in the Pipeline</h3>
+                                    <ul>
+                                        <li><strong>Extraction from Aldi:</strong>
+                                            <p>The <code>aldi_extract</code> task uses the <code>scrape_aldi</code> function to scrape data from the Aldi website.</p>
+                                        </li>
+                                        <li><strong>Extraction from Asda:</strong>
+                                            <p>The <code>asda_extract</code> task uses the <code>scrape_asda</code> function to scrape data from the Asda website.</p>
+                                        </li>
+                                        <li><strong>Extraction from Morrisons:</strong>
+                                            <p>The <code>morrissons_extract</code> task uses the <code>scrape_morrissons</code> function to scrape data from the Morrisons website.</p>
+                                        </li>
+                                        <li><strong>Data File Creation:</strong>
+                                            <p>The <code>datafile_creation</code> task uses the <code>create_datafile</code> function to combine the extracted data from all three stores into a unified data file. It ensures that data from different sources is merged into a single file for further processing.</p>
+                                        </li>
+                                        <li><strong>Data Cleanup:</strong>
+                                            <p>The <code>datafile_cleanup</code> task uses the <code>data_cleanup</code> function to clean and standardize the unified data file. This step ensures that the data is consistent, accurate, and ready for analysis by performing transformations such as price standardization and brand identification.</p>
+                                        </li>
+                                        <li><strong>Upload to S3:</strong>
+                                            <p>The <code>upload_s3</code> task uses the <code>upload_clean_file_to_s3</code> function to upload the cleaned data file to Amazon S3. This step ensures that the cleaned data is stored in a secure and scalable cloud storage service.</p>
+                                        </li>
+                                    </ul>
+                                
+                                    <h3>Task Dependencies</h3>
+                                    <p>The extraction tasks (<code>morrissons_extract</code>, <code>asda_extract</code>, <code>aldi_extract</code>) run in parallel to gather data from each store simultaneously.</p>
+                                    <p>Once all extraction tasks are completed, the <code>datafile_creation</code> task runs to create the unified data file.</p>
+                                    <p>After the data file is created, the <code>datafile_cleanup</code> task runs to clean the data.</p>
+                                    <p>Finally, the cleaned data file is uploaded to S3 by the <code>upload_s3</code> task.</p>
+                                
+                                    <p>By automating these steps, the Airflow pipeline ensures that retail data is collected, processed, and stored efficiently on a daily basis, enabling timely and accurate data analysis.</p>
+                                
                                     <hr class="major" />
 									<h2>Containerization with Docker</h2>
+
+                                    <h3>Components of the Setup</h3>
+                                    <ol>
+                                        <li>
+                                            <strong>Airflow</strong>: 
+                                            <ul>
+                                                <li><em>Role</em>: Manages the workflow of our data collection process, ensuring tasks are done in the right order and at the right time.</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <strong>Selenium</strong>: 
+                                            <ul>
+                                                <li><em>Role</em>: Automatically visits and extracts data from retail websites.</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <strong>Python & Pandas</strong>: 
+                                            <ul>
+                                                <li><em>Role</em>: Processes the collected data, cleaning and organizing it for analysis.</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <strong>Docker</strong>: 
+                                            <ul>
+                                                <li><em>Role</em>: Ensures our setup runs smoothly on any system by bundling all the necessary components together.</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                    
+                                    <h3>Containerized Services</h3>
+                                    <p>We have several Docker containers, each responsible for a part of our system:</p>
+                                    <ul>
+                                        <li><strong>Airflow Container</strong>: Runs the Airflow service which schedules and coordinates tasks.</li>
+                                        <li><strong>Browser Containers (Chrome & Firefox)</strong>: Run Selenium to interact with websites, allowing us to use different browsers for data collection.</li>
+                                        <li><strong>Postgres Container</strong>: Stores our data in a structured way for easy retrieval and analysis.</li>
+                                        <li><strong>Redis Container</strong>: Acts as a cache to speed up certain operations.</li>
+                                    </ul>
+                                    
+                                    <h3>How It Works</h3>
+                                    <ol>
+                                        <li><strong>Task Scheduling</strong>: Airflow schedules tasks and ensures they run in the right order. For example, it will first trigger Selenium to collect data and then move to data processing.</li>
+                                        <li><strong>Data Collection</strong>: Selenium, running in either Chrome or Firefox containers, visits retail websites and extracts data like prices, stock levels, etc.</li>
+                                        <li><strong>Data Storage</strong>: The collected data is sent to the Postgres container, where it is stored securely.</li>
+                                        <li><strong>Data Processing</strong>: Python scripts using Pandas run to clean and organize the data, making it ready for analysis.</li>
+                                        <li><strong>Caching</strong>: Redis helps speed up the process by storing frequently accessed data temporarily.</li>
+                                    </ol>
+                                    
+                                    <h3>Benefits</h3>
+                                    <ul>
+                                        <li><strong>Consistency</strong>: Ensures tasks run in the same way every time.</li>
+                                        <li><strong>Scalability</strong>: Easy to add more tasks or scale up the system by adding more containers.</li>
+                                        <li><strong>Portability</strong>: Docker containers can run on any system, making deployment easy.</li>
+                                    </ul>
+
+                                    <p>To further simplify management of docker, we use docker-compose, it greatly simplifies the docker lifecycle by providing helpful commands for handling containers. In this system, Docker Compose helps to streamline the deployment and orchestration of various services needed for our retail store data collection set up.</p>
+                                    <p>
+                                        This setup ensures that we have a robust, scalable, and portable system for collecting and processing retail store data efficiently.
+                                    </p>
 
                                     <hr class="major" />
 									<h2>Docker Registry with Amazon ECR</h2>
 
+                                    <h3>1. Build the Images</h3>
+                                    <p>
+                                        First, use Docker Compose to build your images. This command reads the <code>docker-compose.yml</code> file and builds the images defined in it.
+                                    </p>
+                                    <pre><code>docker-compose build</code></pre>
+                                
+                                    <h3>2. Create an IAM Role with ECR Permissions</h3>
+                                    <p>Ensure you have an IAM role with the necessary permissions to access ECR. Attach this policy to a new or existing IAM role. Make sure your AWS CLI or EC2 instance is using this IAM role.</p>
+                                
+                                    <h3>3. Log in to Your AWS Account</h3>
+                                    <p>
+                                        Ensure you have the AWS CLI installed and configured with your AWS credentials. Use the following command to log in to your AWS account:
+                                    </p>
+                                    <pre><code>aws configure</code></pre>
+                                    <p>You will be prompted to enter your AWS Access Key, Secret Key, Region, and Output Format.</p>
+                                
+                                    <h3>4. Create ECR Repositories</h3>
+                                    <p>
+                                        Create repositories in ECR for each of the Docker images. You can do this through the AWS Management Console or using the AWS CLI:
+                                    </p>
+                                    <pre><code>aws ecr create-repository --repository-name airflow
+aws ecr create-repository --repository-name chrome
+aws ecr create-repository --repository-name firefox
+aws ecr create-repository --repository-name postgres
+aws ecr create-repository --repository-name redis</code></pre>
+                                
+                                    <h3>5. Authenticate Docker to Your ECR Registry</h3>
+                                    <p>
+                                        Use the AWS CLI to authenticate Docker to your ECR registry. Run the following command, which retrieves an authentication token and passes it to Docker:
+                                    </p>
+                                    <pre><code>aws ecr get-login-password --region &lt;your-region&gt; | 
+docker login --username AWS --password-stdin &lt;aws_account_id&gt;
+.dkr.ecr.&lt;your-region&gt;.amazonaws.com</code></pre>
+                                    <p>Replace <code>&lt;your-region&gt;</code> with your AWS region and <code>&lt;aws_account_id&gt;</code> with your AWS account ID.</p>
+                                
+                                    <h3>6. Tag the Docker Images</h3>
+                                    <p>
+                                        Tag each Docker image with the repository URI. This step is necessary to push the images to the correct repositories in ECR. For example:
+                                    </p>
+                                    <pre><code>docker tag airflow:latest &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/airflow:latest
+docker tag chrome:latest &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/chrome:latest
+docker tag firefox:latest &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/firefox:latest
+docker tag postgres:latest &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/postgres:latest
+docker tag redis:latest &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/redis:latest</code></pre>
+                                    <p>Replace <code>&lt;your-region&gt;</code> and <code>&lt;aws_account_id&gt;</code> accordingly.</p>
+                                
+                                    <h3>7. Push the Docker Images to ECR</h3>
+                                    <p>
+                                        Finally, push the tagged Docker images to the respective ECR repositories:
+                                    </p>
+                                    <pre><code>docker push &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/airflow:latest
+docker push &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/chrome:latest
+docker push &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/firefox:latest
+docker push &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/postgres:latest
+docker push &lt;aws_account_id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com/redis:latest</code></pre>
+                                
+                                    <p>The steps ensure your Docker images are built, tagged, and pushed to your AWS ECR repositories, making them available for deployment.</p>
+
+
                                     <hr class="major" />
 									<h2>Deployment on Digital Ocean</h2>
+                                    <h3>1. Create an Account on DigitalOcean</h3>
+                                    <p>If you don't already have an account, sign up for a new account on DigitalOcean.</p>
+                                
+                                    <h3>2. Spin Up a Droplet</h3>
+                                    <p>Create a new droplet (virtual server) on DigitalOcean. Choose the specifications according to your needs (CPU, memory, storage).</p>
+                                
+                                    <h3>3. Set Up a Firewall</h3>
+                                    <p>Before accessing your droplet, set up a firewall to control incoming traffic:</p>
+                                    <ol>
+                                        <li>Navigate to the "Networking" section in the DigitalOcean dashboard.</li>
+                                        <li>Select "Firewalls" and create a new firewall.</li>
+                                        <li>Add rules to allow necessary ports, such as:
+                                            <ul>
+                                                <li>SSH: TCP 22</li>
+                                                <li>HTTP: TCP 80 (if needed)</li>
+                                                <li>HTTPS: TCP 443 (if needed)</li>
+                                                <li>Airflow: TCP 8080</li>
+                                            </ul>
+                                        </li>
+                                        <li>Apply the firewall to your droplet.</li>
+                                    </ol>
+                                
+                                    <h3>4. Pull the Docker Images from ECR</h3>
+                                    <p>Once the droplet is ready, connect to it via SSH. Use the following steps to pull the Docker images from AWS ECR:</p>
+                                    <ol>
+                                        <li><strong>Install Docker</strong>:
+                                            <pre><code>sudo apt update
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo systemctl enable docker</code></pre>
+                                        </li>
+                                        <li><strong>Install Docker Compose</strong>:
+                                            <pre><code>sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-
+$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose</code></pre>
+                                        </li>
+                                        <li><strong>Authenticate Docker to ECR</strong>:
+                                            <pre><code>aws ecr get-login-password --region &lt;your-region&gt; |
+docker login --username AWS --password-stdin &lt;aws_account_id&gt;
+.dkr.ecr.&lt;your-region&gt;.amazonaws.com</code></pre>
+                                        </li>
+                                    </ol>
+                                
+                                    <h3>5. Use the Server Docker Compose File</h3>
+                                    <p>Upload the <code>server-docker-compose.yml</code> file to the server using <code>scp</code>:</p>
+                                    <pre><code>scp path/to/server-docker-compose.yml user@your_droplet_ip:/path/on/server</code></pre>
+                                
+                                    <h3>6. Pull the Images</h3>
+                                    <p>Navigate to the directory where you placed the <code>server-docker-compose.yml</code> file and pull the images:</p>
+                                    <pre><code>cd /path/on/server
+docker-compose -f server-docker-compose.yml pull</code></pre>
+                                
+                                    <h3>7. Copy the Airflow Environment File to the Server</h3>
+                                    <p>Use <code>scp</code> or any other file transfer method to copy the <code>airflow.env</code> file to your droplet:</p>
+                                    <pre><code>scp path/to/airflow.env user@your_droplet_ip:/path/on/server</code></pre>
+                                
+                                    <h3>8. Run Docker Compose to Start the Servers</h3>
+                                    <p>Navigate to the directory where you placed the <code>server-docker-compose.yml</code> file and run Docker Compose:</p>
+                                    <pre><code>cd /path/on/server
+docker-compose -f server-docker-compose.yml up -d</code></pre>
+                                
+                                    <h3>9. Access the Airflow Environment</h3>
+                                    <p>After running Docker Compose, your Airflow environment will be accessible via the droplet's IP address on the configured port which is 8080 for us.</p>
+                                
+                                    <h3>10. Copy the Commons Folder to the Server</h3>
+                                    <p>We do not include the configs file to the docker image since they contain AWS keys among other credentials, we send the file to the server manually mounted as a volume.</p>
+                                    <p>Copy the <code>commons</code> folder, which contains configurations not included in the images, to the server using <code>scp</code>:</p>
+                                    <pre><code>scp -r path/to/commons user@your_droplet_ip:/path/on/server</code></pre>
+                                    
+                                    <hr class="major" />
+									<h2>Running the Pipeline</h2>
+
+                                    <h3>1. Access the Airflow Web Interface</h3>
+                                    <p>After deploying your Airflow environment, access the Airflow web interface via the droplet's IP address and the configured port (default is usually port 8080). Open your web browser and go to:</p>
+                                    <pre><code>http://your_droplet_ip:8080</code></pre>
+                                
+                                    <h3>2. Navigate to the DAGs Page</h3>
+                                    <p>Once on the Airflow web interface, navigate to the "DAGs" page. This page lists all the available DAGs in your Airflow environment.</p>
+                                
+                                    <h3>3. Select the Retail DAG</h3>
+                                    <p>Find the DAG named "retail" in the list and click on it to view more details about this DAG.</p>
+                                    <span><img width="70%" src="images/retail-pipeline/main_dag.jpg" alt="" /></span>
+                                    <p><p>
+                                    <h3>4. Trigger the DAG</h3>
+                                    <p>On the DAG details page, push the button on the top right corner labeled "Trigger DAG" to manually start the execution of the DAG.</p>
+                                    <span><img width="70%" src="images/retail-pipeline/airflow_trigger.jpg" alt="" /></span>
 
                                     <hr class="major" />
 									<h2>Conclusion</h2>
                                     
+                                    <p>In conclusion, building a scalable retail data extraction pipeline involves a multifaceted approach leveraging various technologies and methodologies. By integrating tools like Selenium for web scraping, Python and Pandas for data processing, and Apache Airflow for orchestrating tasks, the project ensures efficient data extraction and transformation. Docker and AWS services provide the necessary scalability and reliability, while strategic project structuring enhances maintainability and collaboration. Overcoming challenges such as IP blocking and data inconsistencies, the pipeline successfully consolidates and cleans retail data, enabling insightful analysis and decision-making. This comprehensive solution not only tracks grocery prices but also offers a robust framework adaptable to other data extraction needs, reinforcing the importance of real-time data in today's dynamic retail environment.</p>
                                     
 								</section>
 
