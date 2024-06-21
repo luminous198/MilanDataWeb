@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Customer Behavior Analysis</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+                            <head>
+                                <title>Milan Portfolio</title>
+                                <meta charset="utf-8" />
+                                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+                                <link rel="stylesheet" href="assets/css/main.css" />
+                            </head>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Customer Behavior Analysis in Retail Transactions</h1>
+									</header>
+
+									<span class="image main"><img src="images/customer_behavior/banner_main.jpg" alt="" /></span>
+                                    <h2>Introduction</h2>
+                                    <p>In the era of e-commerce, understanding customer behavior is crucial for businesses to optimize their strategies and improve customer satisfaction. In this blog post, we will explore insights derived from the "Online Retail Transaction" dataset. This dataset includes information on transactions made by customers through an online retail platform, capturing details such as products purchased, quantities, transaction dates, prices, customer IDs, and customer locations. By analyzing this data, we aim to uncover patterns and trends that can inform business decisions.</p>
+                                    <p>The dataset was taken from Kaggle and can be found <a href="https://www.kaggle.com/datasets/abhishekrp1517/online-retail-transactions-dataset/code" target="_blank">here</a>.</p>
+                                    <hr class="major" />
+                                    <h2>Dataset Overview</h2>
+                                    <p>The dataset contains the following columns along with their descriptions:</p>
+                                    <div class="row">
+                                        <div class="col-3"></div>
+                                        <div class="col-6">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Column</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>StockCode</td>
+                                                        <td>A code used to identify the product.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Description</td>
+                                                        <td>A brief description of the product.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Quantity</td>
+                                                        <td>The quantity of the product purchased.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>InvoiceDate</td>
+                                                        <td>The date and time of the purchase.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>UnitPrice</td>
+                                                        <td>The price per unit of the product.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CustomerID</td>
+                                                        <td>The unique identifier for each customer.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Country</td>
+                                                        <td>The country where the customer is located.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                    
+                                    <hr class="major" />
+                                    <h2>Data Cleaning and Preprocessing</h2>
+                                    <p>Before diving into the analysis, we performed several data cleaning steps:</p>
+                                    <ul>
+                                        <li>Removed records with non-positive unit prices.</li>
+                                        <li>Focused on transactions within the United Kingdom to narrow the scope of our analysis.</li>
+                                    </ul>
+                                    <hr class="major" />
+                                    <h2>Exploratory Data Analysis</h2>
+                                    
+                                    <h3>Transaction Classification</h3>
+                                    <p>We classified transactions as "Bought" or "Returned" based on the quantity:</p>
+                                    <ul>
+                                        <li>Positive quantities represent purchases.</li>
+                                        <li>Negative quantities represent returns.</li>
+                                    </ul>
+
+                                    
+                                    <h3>Transaction Types</h3>
+                                    <p>The bar chart below compares the number of items bought versus the number of items returned.</p>
+                                    <span><img src="images/customer_behavior/transaction_type.png" alt="Transaction Types" /></span>
+                                    <p><strong>Key Point:</strong> The low return rate indicates customer satisfaction and effective product quality. This metric can be used to gauge overall customer satisfaction and product performance.</p>
+                    
+                                    
+                                    <h3>Time of Day Distribution</h3>
+                                    <p>This bar chart shows the distribution of transactions across different times of the day: Morning, Noon, Afternoon, and Evening.</p>
+                                    <span><img src="images/customer_behavior/time_of_day.png" alt="Time of Day Distribution" /></span>
+                                    <p><strong>Key Point:</strong> Most transactions occur in the Afternoon, indicating peak business activity during this period.</p>
+                    
+                                    <h3>Top Products</h3>
+                                    <p>This bar chart shows the top products based on the number of transactions. The bar chart also includes unit prices along with product names inside the bar.</p>
+                                    <span class="image main"><img src="images/customer_behavior/top_products_v2.png" alt="Top Products" /></span>
+                                    <p><strong>Key Point:</strong> Most top selling items look to be either decorative pieces or maybe gift items. Understanding the top-selling products can help in inventory management and targeted promotions for these popular items. Majority of the items are below $5.</p>
+                    
+                                    <h3>Word Cloud of Product Descriptions</h3>
+                                    <p>This word cloud visualizes the most common words in the product descriptions.</p>
+                                    <span class="image main"><img src="images/customer_behavior/desc_wordcloud.png" alt="Word Cloud of Product Descriptions" /></span>
+                                    <p><strong>Key Point:</strong> The word cloud highlights popular themes and products in the inventory, which can inform marketing strategies and inventory decisions.</p>
+
+
+                                    <h3>Sales Trends of Top Trending Products (Percentage Growth)</h3>
+                                    <p>With the advent of social media, influencer-based marketing has created numerous opportunities for products to go viral, significantly enhancing brand visibility. By identifying top trending products throughout the year, we can pinpoint which items gained viral popularity and understand the impact of influencer marketing on consumer behavior.The grid of line charts shows the percentage sales growth of the top trending products over time.</p>
+                                    <ul>
+                                        <li><strong>Objective:</strong> Find products with significant month-over-month sales growth.</li>
+                                        <li><strong>Method:</strong> Analyzed monthly sales quantities for each product. Calculated month-over-month growth by comparing current month sales with previous month sales. Determined trending products based on significant positive sales growth. Visualized sales trends using line plots to identify and showcase the products with notable growth over time.</li>
+                                    </ul>
+                                    <span class="image main"><img src="images/customer_behavior/trending_products_percent_growth.png" alt="Sales Trends of Top Trending Products (Percentage Growth)" /></span>
+                                    <p><strong>Key Point:</strong> The chart reveals how certain products have experienced significant spikes in sales growth, indicating periods of high demand or successful marketing efforts.</p>
+                    
+                                    <h3>Sales Trends of Top Trending Products (Quantity Sold)</h3>
+                                    <p>The same analysis can also be shown in terms of absolute quantity sold over time, although the products remain same, we can see the trend change over time when we focus on raw quantities rather than growth percentages.</p>
+                                    <span class="image main"><img src="images/customer_behavior/trending_products_quant_sold.png" alt="Sales Trends of Top Trending Products (Quantity Sold)" /></span>
+                                    <p><strong>Key Point:</strong> The trends in quantity sold help in understanding the sales cycles of top products, which can inform production planning and stock management.</p>
+                    
+                                    <h3>Identifying Potential Commercial Customers</h3>
+                                    <p>With the rise of dropshipping, there has been a significant increase in the number of individuals acting as resellers. These individuals, whom we refer to as commercial customers, play a crucial role in the retail ecosystem. In the following analysis, we delve into the data to identify potential customers who are likely engaged in commercial selling. By recognizing these key players, businesses can tailor their strategies to better serve and support this growing segment of the market. The grid of line charts shows the monthly purchase quantities for the top 25 potential commercial customers.</p>
+                                    <ul>
+                                        <li><strong>Objective:</strong> Recognize customers likely engaged in commercial selling.</li>
+                                        <li><strong>Method:</strong> 
+                                            <ul>
+                                                <li>Analyzed purchase volumes, transaction frequency, and total spending:
+                                                    <ul>
+                                                        <li><strong>Purchase Volume:</strong> Identified customers with quantities exceeding a threshold (e.g., 1000 units).</li>
+                                                        <li><strong>Transaction Frequency:</strong> Identified customers with a high number of unique transactions (e.g., more than 20 transactions).</li>
+                                                        <li><strong>Total Spending:</strong> Calculated total spending per customer and identified those exceeding a financial threshold (e.g., $10,000).</li>
+                                                    </ul>
+                                                </li>
+                                                <li>Combined these metrics to filter out potential commercial customers.</li>
+                                                <li>Visualized monthly purchase quantities for these customers using line plots to highlight their purchasing patterns over time.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <span class="image main"><img src="images/customer_behavior/commerical_customer.png" alt="Monthly Purchase Quantities for Top 25 Potential Commercial Customers" /></span>
+                                    <p><strong>Key Point:</strong> These trends can help identify key commercial customers and focus on building stronger relationships with them to drive further growth.</p>
+                    
+                                    <h3>Finding Booming Businesses among Commercial Customers</h3>
+                                    <p>Next, we aim to identify which customers have successfully gained market share in their respective businesses. By focusing on booming customers, we can pinpoint those who have demonstrated significant growth and expansion. Understanding these thriving customers is essential because it allows businesses to analyze the factors contributing to their success. This insight can then be leveraged to develop targeted strategies, provide tailored support, and foster stronger business relationships. Additionally, recognizing booming customers helps in identifying emerging market trends and potential opportunities for collaboration or investment.The grid of line charts shows the monthly purchase quantities for the top 25 customers whose businesses are booming.</p>
+                                    <ul>
+                                        <li><strong>Objective:</strong> Determine customers gaining market share.</li>
+                                        <li><strong>Method:</strong> 
+                                            <ul>
+                                                <li>Calculated the slope of the trend line for each customer’s monthly purchase data:
+                                                    <ul>
+                                                        <li>Extracted month-year from transaction dates.</li>
+                                                        <li>Grouped data by customer and month-year to aggregate monthly purchases.</li>
+                                                        <li>Applied linear regression to each customer's data to calculate the trend slope.</li>
+                                                    </ul>
+                                                </li>
+                                                <li>Identified customers with positive slopes indicating growth.</li>
+                                                <li>Visualized these booming customers using line plots to showcase their increasing transaction trends.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <span class="image main"><img src="images/customer_behavior/commerial_customers_booming.png" alt="Monthly Purchase Quantities for Top 25 Booming Businesses" /></span>
+                                    <p><strong>Key Point:</strong> These trends highlight successful customers, allowing businesses to learn from their behavior and potentially replicate their success with other customers.</p>
+                    
+                                    
+                                    <h3>Commercial Customers with Declining Transactions</h3>
+                                    <p>We also identify businesses experiencing a decline in transaction count, signaling potential long-term challenges. Recognizing these declining customers is essential as it allows businesses to address underlying issues, implement corrective measures, and potentially turn around their performance. Early identification of these trends helps in mitigating risks, reallocating resources effectively, and maintaining a healthy and balanced customer portfolio.The grid of line charts shows the monthly purchase quantities for the top 25 customers who have experienced the longest and most significant declines in their purchasing behavior.</p>
+                                    
+                                    <ul>
+                                        <li><strong>Objective:</strong> Detect customers experiencing a decline in transactions.</li>
+                                        <li><strong>Method:</strong> 
+                                            <ul>
+                                                <li>Analyzed month-over-month percentage changes in purchase quantities:
+                                                    <ul>
+                                                        <li>Aggregated monthly purchase quantities for each customer.</li>
+                                                        <li>Calculated the percentage change between consecutive months.</li>
+                                                    </ul>
+                                                </li>
+                                                <li>Identified customers with significant negative trends by assessing the duration and magnitude of declines:
+                                                    <ul>
+                                                        <li>Detected consecutive negative percentage changes to identify sustained declines.</li>
+                                                        <li>Ranked customers based on the longest and most severe declines(used log of quantities to calculate decline magnitude).</li>
+                                                    </ul>
+                                                </li>
+                                                <li>Visualized these declining customers using line plots to highlight their decreasing transaction patterns.</li>
+                                            </ul>
+                                    </ul>
+
+                                    <span class="image main"><img src="images/customer_behavior/commerical_customers_declining.png" alt="Monthly Purchase Quantities for Top 25 Customers with Longest and Most Significant Declines" /></span>
+                                    <p><strong>Key Point:</strong> The decline trends in these charts can help identify at-risk customers and develop targeted retention strategies to prevent further churn.</p>
+                    
+                                    <hr class="major" />
+                                    <h2>Conclusion</h2>
+                                    <p>Through detailed analysis of retail customer behavior, we have gained valuable insights into transaction patterns, peak purchasing times, top products, and key customer segments. By leveraging these insights, businesses can enhance their marketing strategies, optimize inventory, and improve overall customer satisfaction. Identifying trending products helps in capitalizing on viral marketing opportunities, while recognizing booming and declining customers allows for targeted support and retention strategies. Understanding potential commercial customers also opens new avenues for growth and collaboration. These data-driven decisions are essential for staying competitive in today's dynamic retail landscape.</p>
+                                    <p>The full code for the analysis can be found here: <a href="https://github.com/luminous198/CustomerAnalysisRetail/tree/milan" target="_blank">here.</a></p>
+
+                                </section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+                <div id="sidebar">
+                    <div class="inner">
+
+                        <!-- Search -->
+                            <section id="search" class="alt">
+                                <form method="post" action="#">
+                                    <input type="text" name="query" id="query" placeholder="Search" />
+                                </form>
+                            </section>
+
+                        <!-- Menu -->
+                            <nav id="menu">
+                                <header class="major">
+                                    <h2>Menu</h2>
+                                </header>
+                                <ul>
+                                    <li><a href="index.html">Homepage</a></li>
+                                    <li><a href="resume.html">Resume</a></li>
+                                    <li>
+                                        <span class="opener">Projects</span>
+                                        <ul>
+                                            <li><a href="salary_cleansing.html">Salary Data Cleansing</a></li>
+                                            <li><a href="project_2.html">Food Delivery Analysis</a></li>
+                                            <li><a href="retail_pipeline.html">UK Retail Data Pipeline</a></li>
+                                            <li><a href="retail_customer_transaction.html">Customer Behavior Analysis</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="opener">Blogs</span>
+                                        <ul>
+                                            <li><a href="blog_sql_question.html">Postgresql Generate Series</a></li>
+                                            <li><a href="blog_scraping_simple_food_orders.html">Simple Scraping and Transformation</a></li>
+                                            <li><a href="blog_job_tracker.html">Job Application Tracking</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        <!-- Section -->
+                            <section>
+                                <header class="major">
+                                    <h2>Get in touch</h2>
+                                </header>
+                                <p>Do get in touch if you are looking for a professional working in the field of data.</p>
+                                <ul class="contact">
+                                    <li class="icon solid fa-envelope"><a href="#">milangarg6991@gmail.com</a></li>
+                                    <li class="icon solid fa-phone">(+44) 7741-851570</li>
+                                    <li class="icon solid fa-home">St Marks Street<br />
+                                    Leeds, UK</li>
+                                </ul>
+                            </section>
+
+                        <!-- Footer -->
+                        <footer id="footer">
+                            <p class="copyright">Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+                        </footer>
+
+                    </div>
+                </div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
