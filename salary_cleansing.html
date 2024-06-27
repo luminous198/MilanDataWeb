@@ -53,7 +53,7 @@
                                     <p>Most questions on the form are self explanatory, I add below questions from the form and their brief descriptions.</p>
 
                                     <div class="row">
-                                        <table border="1">
+                                        <table border="1" class="responsive-table">
                                             <tr>
                                                 <th>Column</th>
                                                 <th>Description</th>
@@ -192,7 +192,7 @@
                                     <h3>Lets start with checking the data in the country column.</h3>
 
                                     <div class="row">
-                                        <table border="1">
+                                        <table border="1" class="responsive-table">
                                             <tr>
                                               <th></th>
                                               <th>What country do you work in?</th>
@@ -232,13 +232,13 @@
 
                                     <div class="row">
                                         <div class="col-4">
-                                            <span><img src="images/salary_cleansing/country_problem1.jpg" alt="" /></span>
+                                            <span><img class="responsive-img" src="images/salary_cleansing/country_problem1.jpg" alt="" /></span>
                                         </div>
                                         <div class="col-4">
-                                            <span><img src="images/salary_cleansing/country_problem2.jpg" alt="" /></span>
+                                            <span><img class="responsive-img" src="images/salary_cleansing/country_problem2.jpg" alt="" /></span>
                                         </div>
                                         <div class="col-4">
-                                            <span><img src="images/salary_cleansing/country_problem3.jpg" alt="" /></span>
+                                            <span><img class="responsive-img" src="images/salary_cleansing/country_problem3.jpg" alt="" /></span>
                                         </div>
                                     </div>
                                     <br>
@@ -253,7 +253,7 @@
 
                                     <p>Here is our strategy to cleanup the country column.</p>
 
-                                    <table>
+                                    <table class="responsive-table">
                                         <thead>
                                             <tr>
                                                 <th>Step Name</th>
@@ -291,7 +291,7 @@
                                     <p>We also make use of a cache when running the above process since fuzzy search can be quite slow when running on even a small dataset of 20K records. Caching the result of the operation makes searching many folds efficient. The results are detailed below.</p>
 
                                     <div class="row">
-                                        <table>
+                                        <table class="responsive-table">
                                             <thead>
                                                 <tr>
                                                     <th></th>
@@ -328,7 +328,7 @@
                                     <p>We still have some countries left with ambiguous values after cleanup as shown below. A total of 114 are left, we can make sure to cleanup most of the remaining data as well but it would require us to maintain direct mappings of these values.</p>
                                     
                                     <div class="row">
-                                        <span><img src="images/salary_cleansing/country_cleanup.jpg" alt="" /></span>
+                                        <span><img class="responsive-img" src="images/salary_cleansing/country_cleanup.jpg" alt="" /></span>
                                     </div>
 
 
@@ -337,25 +337,25 @@
                                     <p>Again, we start by looking at descriptive statistics. The maximum number is too large for a realistic salary compared to the lower quartiles, what can be going on.</p>
 
                                     <div class="row">
-                                        <span><img src="images/salary_cleansing/salary_problem1.jpg" alt="" /></span>
+                                        <span><img class="responsive-img" src="images/salary_cleansing/salary_problem1.jpg" alt="" /></span>
                                     </div>
 
                                     <p>Looking at the dataset we quickly realise the data consists salaries from different nations in their local currencies which could lead to such discrepency.</p>
 
                                     <div class="row">
-                                        <span><img width="80%" src="images/salary_cleansing/salary_problem2.jpg" alt="" /></span>
+                                        <span><img class="responsive-img" src="images/salary_cleansing/salary_problem2.jpg" alt="" /></span>
                                     </div>
 
                                     <p>A quick conversion from the Indonesian Rupiah to UK Dollar shows that 870,000,000 IDR is equivalent to 54,888 US Dollar(as of the time of writing this blog) which does not seem implausible.</p>
                                     <p>Next, we check the descriptive statistics for Salary for US citizens only using the country filter.</p>
                                     <div class="row">
-                                        <span><img src="images/salary_cleansing/salary_desc_us_only.jpg" alt="" /></span>
+                                        <span><img class="responsive-img" src="images/salary_cleansing/salary_desc_us_only.jpg" alt="" /></span>
                                     </div>
 
                                     <p>Although, $1million does not seem improbable, upon close inspection we find the record is most likely junk. Unfortunately, there is no easy way to find such records hence making data cleaning a repetitive and non-glamorous aspect of data analysis.</p>
                                     
                                     <div class="row">
-                                        <span><img width="80%" src="images/salary_cleansing/salary_us_junk.jpg" alt="" /></span>
+                                        <span><img class="responsive-img"  src="images/salary_cleansing/salary_us_junk.jpg" alt="" /></span>
                                     </div>
                                     <br>
                                     <p>Removing the above record, we get the next highest salary in US of $5000044. To make further sense of the salary, we need to first standardise the currency we are dealing in. We have two columns for the same, one is a dropdown and other is a text values entered by the user in case currency is not listed.</p>
