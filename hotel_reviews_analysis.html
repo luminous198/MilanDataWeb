@@ -1,0 +1,468 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Hotel Reviews Analysis</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+                            <head>
+                                <title>Milan Portfolio</title>
+                                <meta charset="utf-8" />
+                                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+                                <link rel="stylesheet" href="assets/css/main.css" />
+                            </head>
+
+
+                        <!-- Content -->
+                        <section>
+                            <header class="main">
+                                <h2>Introduction</h2>
+                            </header>
+
+                            <span class="image main"><img src="images/hotel_review_analysis/main.jpg" alt="" /></span>
+                            
+                            <p>Understanding the patterns and trends in hotel reviews can provide valuable insights into customer preferences, satisfaction levels, and the overall performance of hotels. In this analysis, we explore various aspects of hotel reviews, including review frequency by date, the influence of reviewer nationality, review scores, and sentiments. Let's delve into the findings and interpret the results from our comprehensive analysis.</p>
+                            
+                            <hr class="major" />
+
+                            <header class="main">
+                                <h2>Dataset Summary</h2>
+                            </header>
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Column Name</th>
+                                        <th>Description</th>
+                                        <th>Data Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Hotel_Name</td>
+                                        <td>Name of the hotel where the review was given</td>
+                                        <td>String</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reviewer_Nationality</td>
+                                        <td>Nationality of the reviewer</td>
+                                        <td>String</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Review_Date</td>
+                                        <td>Date when the review was submitted</td>
+                                        <td>Date</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reviewer_Score</td>
+                                        <td>Score given by the reviewer (out of 10)</td>
+                                        <td>Float</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Positive_Review</td>
+                                        <td>Positive comments provided by the reviewer</td>
+                                        <td>String</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Negative_Review</td>
+                                        <td>Negative comments provided by the reviewer</td>
+                                        <td>String</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Additional_Number_of_Scoring</td>
+                                        <td>Number of additional scores provided by the reviewer</td>
+                                        <td>Integer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average_Score</td>
+                                        <td>Average score of the hotel at the time of the review</td>
+                                        <td>Float</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total_Number_of_Reviews</td>
+                                        <td>Total number of reviews the hotel has received</td>
+                                        <td>Integer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total_Number_of_Reviews_Reviewer_Has_Given</td>
+                                        <td>Total number of reviews the reviewer has given</td>
+                                        <td>Integer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tags</td>
+                                        <td>Tags associated with the review indicating trip type (e.g., Leisure, Business)</td>
+                                        <td>String</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Positive_Review_Sentiment</td>
+                                        <td>Sentiment score of the positive review (calculated during analysis)</td>
+                                        <td>Float</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Negative_Review_Sentiment</td>
+                                        <td>Sentiment score of the negative review (calculated during analysis)</td>
+                                        <td>Float</td>
+                                    </tr>
+                                    <tr>
+                                        <td>leisure</td>
+                                        <td>Indicator if the review is tagged as a leisure trip (1 if true, 0 otherwise)</td>
+                                        <td>Integer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>solo</td>
+                                        <td>Indicator if the review is tagged as a solo trip (1 if true, 0 otherwise)</td>
+                                        <td>Integer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>family</td>
+                                        <td>Indicator if the review is tagged as a family trip (1 if true, 0 otherwise)</td>
+                                        <td>Integer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>business</td>
+                                        <td>Indicator if the review is tagged as a business trip (1 if true, 0 otherwise)</td>
+                                        <td>Integer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>couple</td>
+                                        <td>Indicator if the review is tagged as a couple trip (1 if true, 0 otherwise)</td>
+                                        <td>Integer</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <header class="main">
+                                <h2>Data Preprocessing</h2>
+                            </header>
+                            <p>Before conducting the analysis, we performed several preprocessing steps to prepare the data:</p>
+                            <ul>
+                                <li><strong>Extracting City and Country:</strong> We used the geopy library to determine the city and country from the hotel's address based on latitude and longitude. The data was grouped by the hotel's latitude and longitude coordinates, and a separate file was created containing the latitude, longitude, city, and country information.</li>
+                                <li><strong>Loading and Joining Data:</strong> When loading the main dataset, we joined it with the file containing city and country information to ensure each hotel review was associated with the correct location.</li>
+                                <li><strong>Sentiment Analysis:</strong> We used the VADER sentiment analysis tool in Python to calculate sentiment scores for both positive and negative reviews. These sentiment scores were saved in the dataset to avoid recalculating them every time the data was loaded. The location information was also joined using the previously dumped file after loading the data.</li>
+                                <li><strong>Date Columns:</strong> We added several date-related columns to the dataset, such as the day of the month, day of the week, and month, to facilitate time-based analysis.</li>
+                                <li><strong>Tag Extraction:</strong> We extracted tags into five columns based on rule-based matching. The tags included 'leisure', 'solo', 'family', 'business', and 'couple' to categorize the type of trip associated with each review.</li>
+                            </ul>
+
+                            <hr class="major" />
+                            
+                            <header class="main">
+                                <h2>Review Frequency Analysis</h2>
+                            </header>
+
+                            <h3>Daily Review Frequency</h3>
+                            <img src="images/hotel_review_analysis/reviews_by_date_freq_dom.png" alt="Number of Reviews per Day of the Month" />
+                            <p>The distribution is fairly uniform, indicating that the day of the month does not significantly influence the likelihood of submitting a review.</p>
+
+                            <h3>Weekly Review Frequency</h3>
+                            <img src="images/hotel_review_analysis/reviews_by_date_freq_dow.png" alt="Number of Reviews per Day of the Week" />
+                            <p>The spike in reviews on Tuesdays could be attributed to business travelers reviewing their stays after the weekend.</p>
+                            <p><strong>#TODO analyse busienss travel here once to confirm</strong></p>
+
+                            <h3>Monthly Review Frequency</h3>
+                            <img src="images/hotel_review_analysis/reviews_by_date_freq_month.png" alt="Number of Reviews per Month" />
+                            <p>The increase in reviews during the summer months suggests a higher volume of travel and hotel stays during this period, likely due to summer vacations.</p>
+
+
+                            <h3>Weekday vs. Weekend Review Frequency</h3>
+                            <img src="images/hotel_review_analysis/reviews_by_date_freq_weekday.png" alt="Number of Reviews: Weekday vs Weekend" />
+                            <p>This aligns with the earlier observation of higher reviews on Tuesdays, suggesting that travelers, especially business travelers, are more likely to write reviews during the week.</p>
+
+                            <header class="main">
+                                <h2>Reviewer Nationality Analysis</h2>
+                            </header>
+
+                            <h3>Number of Reviews by Nationality</h3>
+                            <img width="1000" src="images/hotel_review_analysis/box_plot_num_reviews_nat.png" alt="Number of Reviews by Nationality" />
+                            <p>The distribution shows that reviewers from the United Kingdom and Germany are among the most frequent contributors.</p>
+
+                            <h3>Review Scores by Nationality</h3>
+                            <img width="1000" src="images/hotel_review_analysis/box_plot_rev_score_nat.png" alt="Review Scores by Nationality" />
+                            <p>There are noticeable differences in review scores among nationalities. For example, reviewers from Saudi Arabia tend to give higher scores, while those from the United States have a wider range of scores.</p>
+                            <p><strong>redo this para</strong></p>
+
+                            <h2>Hotels By Number of Reviews</h2>
+                            <p>The chart below shows the top 10 hotels that have received the most number of reviews. This can provide insights into the popularity and guest engagement for these hotels.</p>
+                            <img width="1000" src="images/hotel_review_analysis/hotels_by_num_reviews.png" alt="Review Scores by Nationality" />
+                            
+                            <h2>Analysis Based on Hotel Location</h2>
+                            <header class="main">
+                                <h3>Top Cities by Number of Reviews</h3>
+                            </header>
+                            <p>The chart below shows the top cities by the total number of hotel reviews. This visualization helps us understand which cities receive the most reviews and are potentially the most popular travel destinations among the dataset.</p>
+                            <img width="1000" src="images/hotel_review_analysis/top_cities.png" alt="Top 10 Cities by Number of Reviews" />
+                            <p>As seen in the chart, London stands out with the highest number of reviews, significantly more than any other city. Other cities with high review counts include Barcelona, Paris, Amsterdam, and Milano. This distribution indicates a strong preference for these major European cities among travelers.</p>
+                        
+                            <header class="main">
+                                <h3>Reviews on cities based on Day of Week</h3>
+                            </header>
+                            <p>The heatmap reveals that while most cities follow a similar pattern of peak reviews on Tuesdays and Sundays, the City of Westminster exhibits some deviations from this trend. Let's dive deeper into the comparative analysis for the City of Westminster against the general pattern observed in other cities.</p>
+                            <img width="1000" src="images/hotel_review_analysis/city_num_review_by_dow_diff_plots.png" alt="Top 10 Cities by Number of Reviews" />
+                            
+                            
+                            <ul>
+                                <li><strong>Less Pronounced Mid-week Peaks:</strong> Unlike other cities where mid-week days (Wednesday) also see a high number of reviews, Westminster shows a less pronounced peak, indicating a more balanced distribution throughout the week.</li>
+                                <li><strong>Lower Monday Reviews:</strong> The drop on Mondays is more significant in Westminster compared to other cities, which might suggest different traveler behavior or review submission patterns.</li>
+                                <li><strong>Consistent Review Activity:</strong> Westminster has a more consistent review activity across the week compared to the sharp peaks and troughs seen in other cities.</li>
+                            </ul>
+
+                            <header class="main">
+                                <h3>Reviews on cities based on Day of Month</h3>
+                            </header>
+                            <p>The heatmap reveals that while most cities follow a similar pattern of peak reviews on Tuesdays and Sundays, the City of Westminster exhibits some deviations from this trend. Let's dive deeper into the comparative analysis for the City of Westminster against the general pattern observed in other cities.</p>
+                            <img width="1000" src="images/hotel_review_analysis/city_num_review_by_dom_diff_plots.png" alt="Top 10 Cities by Number of Reviews" />
+                            
+                        
+                            <ul>
+                                <li><strong>Steady Review Flow in Major Cities:</strong> Cities like London, Barcelona, Paris, and Amsterdam show a consistent pattern of review submissions throughout the month, indicating steady tourism and hotel stay rates.</li>
+                                <li><strong>Variations in Westminster:</strong> The City of Westminster shows more noticeable variations with significant drops on specific days. This could be due to specific local events, holidays, or other factors influencing review submissions on those days.</li>
+                                <li><strong>Middle of the Month Activity:</strong> Some cities like Paris and Wien show a slight increase in review counts around the middle of the month, which could be attributed to mid-month travel peaks or promotional events.</li>
+                            </ul>
+                        
+                            <header class="main">
+                                <h3>Average Ratings Over Time by City</h3>
+                            </header>
+                            <p>The line graph below visualizes the average rating trends over time for various cities. Each subplot represents a different city, with the x-axis showing the year and month, and the y-axis representing the average rating.</p>
+                        
+                            <img width="1000" src="images/hotel_review_analysis/rating_by_city.png" alt="Average Ratings Over Time by City" />
+                        
+                            <ul>
+                                <li><strong>Consistent Cities:</strong> London and Milano show more consistent ratings over time, suggesting steady guest satisfaction without significant fluctuations.</li>
+                                <li><strong>Variable Cities:</strong> Barcelona, Paris, Amsterdam, Wien, and City of Westminster exhibit more variability in their ratings, with distinct peaks and troughs. This indicates fluctuating guest satisfaction possibly due to seasonal factors, events, or changes in hotel services.</li>
+                            </ul>
+
+                            <hr class="major" />
+                            <header class="main">
+                                <h2>Hypothesis Testing</h2>
+                            </header>
+
+                            <h3>Hypothesis 1: Impact of Nationality on Review Scores</h3>
+                            <p><strong>Hypothesis:</strong> Review scores vary significantly by reviewer nationality.</p>
+                            <p><strong>Test:</strong> Perform an ANOVA test to see if there are significant differences in Reviewer_Score between different Reviewer_Nationality.</p>
+                            <p><strong>Analysis:</strong> If the test shows significant differences, it indicates that review scores are influenced by the reviewer's nationality.</p>
+
+                            <p>The violin plot below visualizes the distribution and density of review scores given by reviewers from different nationalities. Each "violin" represents a nationality, showing the density of review scores along the y-axis. The wider sections of the violin indicate a higher density of reviews at those score levels.</p>
+                        
+                            <img width="1000" src="images/hotel_review_analysis/anova_nationality_reviewer_score.png" alt="Distribution and Density of Review Scores by Nationality" />
+                        
+                            <h3>Key Observations:</h3>
+                            <ul>
+                                <li><strong>General Distribution:</strong> Most nationalities show a high density of review scores around 8 to 9, indicating generally positive reviews across different nationalities. There are tails extending downwards towards lower scores, suggesting that while most reviews are positive, there are instances of lower ratings.</li>
+                                <li><strong>Variations Between Nationalities:</strong>
+                                    <ul>
+                                        <li><strong>Saudi Arabia:</strong> Shows a very narrow distribution with a high density around the score of 9, indicating a tendency to give higher ratings.</li>
+                                        <li><strong>Russia:</strong> Displays a broader distribution with a noticeable density around both 8 and 9, but also significant density in lower scores.</li>
+                                        <li><strong>United States of America:</strong> Similar to Russia, shows a wide distribution with density around 8 and 9, as well as lower scores.</li>
+                                        <li><strong>Australia and United Kingdom:</strong> Both have a dense distribution around 8, but with tails indicating lower scores as well.</li>
+                                        <li><strong>Other Nationalities:</strong> Generally follow a similar pattern, with high densities around 8 to 9 and varying lengths of tails towards lower scores.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Significant Differences:</strong> The ANOVA test result shows a statistic of 372.35093107636305 and a p-value of 0.0. Since the p-value is less than 0.05, it indicates that there are significant differences in review scores between different nationalities.</li>
+                            </ul>
+
+                            <h3>Hypothesis 2: Difference in Review Sentiments Between Cities</h3>
+                            <p><strong>Hypothesis:</strong> There are significant differences in the sentiment of reviews between different cities.</p>
+                            <p><strong>Test:</strong> Use a Kruskal-Wallis test to compare Positive_Review_Sentiment and Negative_Review_Sentiment across different city groups.</p>
+                            <p><strong>Analysis:</strong> Significant results would suggest that the sentiments of reviews differ between cities.</p>
+                        
+                            <p>The box plots below visualize the distribution of positive and negative review sentiments across different cities. The sentiments were analyzed to determine if there are significant differences in how guests from various cities perceive their hotel experiences.</p>
+                            
+                            
+                            <img width="1000" src="images/hotel_review_analysis/city_sentiment_test_negative.png" alt="Distribution of Negative Review Sentiments by City" />
+                            <img width="1000" src="images/hotel_review_analysis/city_sentiment_test_positive.png" alt="Distribution of Positive Review Sentiments by City" />
+                            <p><strong>Kruskal-Wallis test for Positive Review Sentiment:</strong> H-statistic = 1710.920660343248, p-value = 0.0</p>
+                            <p><strong>Kruskal-Wallis test for Negative Review Sentiment:</strong> H-statistic = 338.2590989679949, p-value = 5.1111007862571845e-70</p>
+                            
+                            <h3>Key Observations:</h3>
+                            <ul>
+                                <li><strong>Negative Review Sentiments:</strong>
+                                    <ul>
+                                        <li>The median negative sentiment is around -0.25 for most cities, indicating a general tendency towards mildly negative reviews.</li>
+                                        <li>The interquartile range (IQR) is similar across cities, suggesting a consistent spread in the negativity of reviews.</li>
+                                        <li>Cities like <strong>Paris</strong> and <strong>City of Westminster</strong> show slightly more negative sentiments compared to others, with their median values closer to -0.3.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Positive Review Sentiments:</strong>
+                                    <ul>
+                                        <li>The median positive sentiment is around 0.75 for most cities, indicating generally positive reviews.</li>
+                                        <li>The IQR shows a consistent spread in the positivity of reviews across cities.</li>
+                                        <li>There are noticeable outliers, particularly for cities like <strong>Paris</strong> and <strong>City of Westminster</strong>, suggesting some extremely positive reviews as well as some negative ones within the positive sentiment category.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <p>The box plots, combined with the Kruskal-Wallis test results, indicate significant differences in both positive and negative review sentiments across different cities. While the general trend shows positive sentiments being higher than negative sentiments, the distribution and spread vary between cities, suggesting different guest experiences and perceptions.</p>
+
+                            <h3>Hypothesis 3: Differences in Sentiment Based on Trip Type</h3>
+                            <p><strong>Hypothesis:</strong> The sentiment of reviews differs based on the type of trip (e.g., leisure, business).</p>
+                            <p><strong>Test:</strong> Extract trip types from the Tags field and compare Positive_Review_Sentiment and Negative_Review_Sentiment for different trip types using t-tests or ANOVA.</p>
+                            <p><strong>Analysis:</strong> Significant differences would suggest that the nature of the trip affects the sentiment of the review.</p>
+
+                            <p>The box plots below visualize the distribution of positive and negative review sentiments across different trip types. The sentiments were analyzed to determine if there are significant differences based on the nature of the trip.</p>
+                        
+                            <img width="1000" src="images/hotel_review_analysis/anova_trip_types.png" alt="Review Sentiments by Trip Type" />
+                        
+
+                            <p><strong>ANOVA for Positive Review Sentiment by Trip Type:</strong> F-statistic = 1456.652, p-value = 0.000</p>
+                            <p><strong>ANOVA for Negative Review Sentiment by Trip Type:</strong> F-statistic = 14.152, p-value = 0.000</p>
+                        
+                            <h3>Key Observations:</h3>
+                            <ul>
+                                <li><strong>Positive Review Sentiments:</strong>
+                                    <ul>
+                                        <li>The median positive sentiment is highest for trips categorized as "couple" and "family," indicating that these trip types tend to have more positive reviews.</li>
+                                        <li>The sentiment for "leisure" trips is slightly lower compared to "couple" and "family," but still relatively high.</li>
+                                        <li>"Solo" and "business" trips have similar positive sentiment distributions, both with slightly lower medians than "leisure," "couple," and "family."</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Negative Review Sentiments:</strong>
+                                    <ul>
+                                        <li>The median negative sentiment is around -0.25 for all trip types, indicating a general tendency towards mildly negative reviews.</li>
+                                        <li>There is little variation in negative sentiment between different trip types, suggesting that negative experiences may be perceived similarly across different types of trips.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        
+                            <p>The box plots, combined with the ANOVA test results, indicate significant differences in positive review sentiments based on the type of trip, while negative sentiments show less variation. This suggests that the nature of the trip influences how positively guests review their experiences, with "couple" and "family" trips tending to have more positive sentiments.</p>
+
+                            <hr class="major" />
+                            <header class="main">
+                                <h2>Conclusion</h2>
+                            </header>
+                            
+                            <p>Through this comprehensive analysis of hotel reviews, several key insights were uncovered regarding review patterns, sentiments, and influences based on various factors such as nationality, trip type, and city.</p>
+                            
+                            <h3>Key Findings:</h3>
+                            <ul>
+                                <li><strong>Review Frequency:</strong>
+                                    <ul>
+                                        <li>Reviews are generally evenly distributed across the days of the month.</li>
+                                        <li>Tuesdays and Sundays see a higher number of reviews, likely influenced by business travel patterns.</li>
+                                        <li>Summer months experience a surge in review submissions, correlating with increased travel activity during vacation periods.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Nationality Influence:</strong>
+                                    <ul>
+                                        <li>There are significant differences in review scores based on the reviewer's nationality, with Saudi Arabian reviewers tending to give higher ratings, while reviewers from the United States exhibit a wider range of scores.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>City-Based Sentiments:</strong>
+                                    <ul>
+                                        <li>Significant differences were observed in review sentiments across different cities, with cities like Paris and the City of Westminster showing slightly more negative sentiments.</li>
+                                        <li>Positive sentiments were generally higher, but the distribution varied by city, suggesting different guest experiences and perceptions.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Trip Type Influence:</strong>
+                                    <ul>
+                                        <li>Trip type significantly affects review sentiments, with "couple" and "family" trips receiving higher positive sentiments compared to "solo" and "business" trips.</li>
+                                        <li>Negative sentiments were more consistent across trip types, indicating similar perceptions of negative experiences regardless of the trip type.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>Recommendations:</h3>
+                            <ul>
+                                <li>Hoteliers should consider tailoring their services to meet the expectations of travelers from different nationalities, potentially offering personalized experiences to enhance satisfaction.</li>
+                                <li>Understanding the distinct needs and preferences of different trip types can help hotels cater to these segments more effectively, improving overall guest satisfaction.</li>
+                                <li>Monitoring review patterns by day and month can help hotels anticipate peak review times and manage their online reputation more proactively.</li>
+                            </ul>
+                            
+                            <p>This analysis highlights the importance of considering various factors that influence guest reviews and sentiments. By leveraging these insights, hotels can enhance their service offerings, improve guest satisfaction, and maintain a positive online reputation.</p>
+
+
+
+                        </section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+                <div id="sidebar">
+                    <div class="inner">
+
+                        <!-- Search -->
+                            <section id="search" class="alt">
+                                <form method="post" action="#">
+                                    <input type="text" name="query" id="query" placeholder="Search" />
+                                </form>
+                            </section>
+
+                        <!-- Menu -->
+                            <nav id="menu">
+                                <header class="major">
+                                    <h2>Menu</h2>
+                                </header>
+                                <ul>
+                                    <li><a href="index.html">Homepage</a></li>
+                                    <li>
+                                        <span class="opener">Projects</span>
+                                        <ul>
+                                            <li><a href="retail_customer_transaction.html">Customer Behavior Analysis</a></li>
+                                            <li><a href="hotel_reviews_analysis.html">Hotel Review Analysis</a></li>
+                                            <li><a href="salary_cleansing.html">Salary Data Cleansing</a></li>
+                                            <li><a href="project_2.html">Food Delivery Analysis</a></li>
+                                            <li><a href="retail_pipeline.html">UK Retail Data Pipeline</a></li>
+
+
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="opener">Blogs</span>
+                                        <ul>
+                                            <li><a href="blog_sql_question.html">Postgresql Generate Series</a></li>
+                                            <li><a href="blog_scraping_simple_food_orders.html">Simple Scraping and Transformation</a></li>
+                                            <li><a href="blog_job_tracker.html">Job Application Tracking</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        <!-- Section -->
+                            <section>
+                                <header class="major">
+                                    <h2>Get in touch</h2>
+                                </header>
+                                <p>Do get in touch if you are looking for a professional working in the field of data.</p>
+                                <ul class="contact">
+                                    <li class="icon solid fa-envelope"><a href="#">milangarg6991@gmail.com</a></li>
+                                    <li class="icon solid fa-phone">(+44) 7741-851570</li>
+                                    <li class="icon solid fa-home">London, UK</li>
+                                </ul>
+
+                                
+                            </section>
+
+                        <!-- Footer -->
+                        <footer id="footer">
+                            <p class="copyright">Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+                        </footer>
+
+                    </div>
+                </div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
