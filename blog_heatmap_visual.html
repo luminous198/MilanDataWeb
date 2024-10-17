@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<!--
+    Editorial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+    <head>
+        <title>Visualizing TV Series Ratings</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+    </head>
+    <body class="is-preload">
+
+        <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Main -->
+            <div id="main">
+                <div class="inner">
+
+                    <!-- Header -->
+                    <header class="main">
+                        <h1>Visualizing TV Series Ratings with Heatmaps</h1>
+                    </header>
+
+                    <span class="image main"><img src="images/heatmap_visual/banner.jfif" alt="TV Ratings Heatmap Banner" /></span>
+
+                    <p>
+                        Heatmaps are an excellent way to visualize data across two dimensions using color intensities. 
+                        They provide insight into patterns, correlations, and anomalies, making them ideal for tracking progress over time. 
+                        In this project, we use heatmaps to analyze the performance of a TV series, episode by episode, across multiple seasons.
+                    </p>
+
+                    <hr class="major" />
+
+                    <h2>TV Series Ratings: A Case Study</h2>
+                    <p>
+                        Below is a dataset showing normalized ratings (on a 10-point scale) from the first five seasons of a popular TV show. 
+                        The goal is to visualize this data in a way that highlights trends and fluctuations in viewer sentiment across seasons and episodes.
+                    </p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Episode</th>
+                                <th>Season 1</th>
+                                <th>Season 2</th>
+                                <th>Season 3</th>
+                                <th>Season 4</th>
+                                <th>Season 5</th>
+                                <th>Season 6</th>
+                                <th>Season 7</th>
+                                <th>Season 8</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>10.0</td><td>10.0</td><td>9.8</td><td>9.5</td><td>9.6</td><td>8.6</td><td>9.3</td><td>9.2</td></tr>
+                            <tr><td>2</td><td>10.0</td><td>8.9</td><td>8.9</td><td>10.0</td><td>9.6</td><td>8.7</td><td>9.6</td><td>8.7</td></tr>
+                            <tr><td>3</td><td>8.6</td><td>10.0</td><td>9.2</td><td>9.6</td><td>10.0</td><td>8.7</td><td>9.0</td><td>7.3</td></tr>
+                            <tr><td>4</td><td>10.0</td><td>9.7</td><td>10.0</td><td>9.6</td><td>9.6</td><td>10.0</td><td>9.7</td><td>5.8</td></tr>
+                            <tr><td>5</td><td>9.5</td><td>9.6</td><td>9.8</td><td>9.8</td><td>9.6</td><td>9.8</td><td>9.5</td><td>4.9</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        The heatmap below visualizes this data. The x-axis represents the seasons, while the y-axis corresponds to episodes within each season. 
+                        Darker shades indicate higher ratings, making it easy to spot patterns in the series’ performance over time.
+                    </p>
+
+                    <span style="display: flex; justify-content: center;"><img src="images/heatmap_visual/visual_v1.jpg" alt="Initial Heatmap Example" /></span>
+
+                    <p>
+                        In the next version, we add ratings as annotations within each heatmap cell to improve readability and provide more detailed insights:
+                    </p>
+                    <span style="display: flex; justify-content: center;"><img src="images/heatmap_visual/visual_v2.jpg" alt="Annotated Heatmap" /></span>
+
+                    <p>
+                        Finally, instead of simple blocks, we enhance the visual appeal by using individual shapes such as rectangles or ellipses to represent each episode:
+                    </p>
+                    <span style="display: flex; justify-content: center;"><img src="images/heatmap_visual/visual_v3.jpg" alt="Heatmap with Shapes" /></span>
+
+                    <h2>Beyond TV Shows: Application in Sports and Movies</h2>
+                    <p>
+                        The concept of heatmaps can be extended to various domains:
+                    </p>
+                    <ul>
+                        <li><strong>Sports Performance:</strong> Visualize wins, losses, and draws over a season.</li>
+                        <li><strong>Movie Revenue:</strong> Track box office trends over time, identifying high and low-performing weeks.</li>
+                    </ul>
+
+                    <p>
+                        By tailoring the data points and choosing the right shapes or colors, heatmaps provide a versatile tool for visualizing performance trends across industries.
+                    </p>
+
+                    <hr class="major" />
+
+                    <h2>Conclusion</h2>
+                    <p>
+                        Heatmaps are a powerful and intuitive tool for identifying trends, anomalies, and outliers in data. 
+                        Whether used for TV series ratings, sports analytics, or business insights, heatmaps offer a quick and visually appealing way to spot patterns at a glance. 
+                        Start using heatmaps today to discover hidden trends in your data!
+                    </p>
+
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div id="sidebar">
+                <div class="inner">
+            
+                    <!-- Search -->
+                        <section id="search" class="alt">
+                            <form method="post" action="#">
+                                <input type="text" name="query" id="query" placeholder="Search" />
+                            </form>
+                        </section>
+            
+                    <!-- Menu -->
+                        <nav id="menu">
+                            <header class="major">
+                                <h2>Menu</h2>
+                            </header>
+                            <ul>
+                                <li><a href="index.html">Homepage</a></li>
+                                <li>
+                                    <span class="opener">Projects</span>
+                                    <ul>
+                                        <li><a href="retail_customer_transaction.html">Customer Behavior Analysis</a></li>
+                                        <li><a href="hotel_reviews_analysis.html">Hotel Review Analysis</a></li>
+                                        <li><a href="salary_cleansing.html">Salary Data Cleansing</a></li>
+                                        <li><a href="project_2.html">Food Delivery Analysis</a></li>
+                                        <li><a href="retail_pipeline.html">UK Retail Data Pipeline</a></li>
+            
+            
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="opener">Blogs</span>
+                                    <ul>
+                                        <li><a href="blog_heatmap_visual.html">Visualise TV Series Ratings</a></li>
+                                        <li><a href="blog_sql_question.html">Postgresql Generate Series</a></li>
+                                        <li><a href="blog_scraping_simple_food_orders.html">Simple Scraping and Transformation</a></li>
+                                        <li><a href="blog_job_tracker.html">Job Application Tracking</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+            
+                    <!-- Section -->
+                        <section>
+                            <header class="major">
+                                <h2>Get in touch</h2>
+                            </header>
+                            <p>Do get in touch if you are looking for a professional working in the field of data.</p>
+                            <ul class="contact">
+                                <li class="icon solid fa-envelope"><a href="#">milangarg6991@gmail.com</a></li>
+                                <li class="icon solid fa-phone">(+44) 7741-851570</li>
+                                <li class="icon solid fa-home">London, UK</li>
+                            </ul>
+                        </section>
+            
+                    <!-- Footer -->
+                    <footer id="footer">
+                        <p class="copyright">Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+                    </footer>
+            
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+
+    </body>
+</html>
